@@ -365,6 +365,132 @@
     border-color: rgba(47,102,208,.20);
   }
 
+
+  /* ── PROJECT SEARCH ── */
+  .project-filter-bar {
+    padding: 12px 28px 0;
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+
+  .project-filter-inner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: rgba(255,255,255,.025);
+  }
+
+  .project-filter-label {
+    font-size: 11px;
+    color: var(--text3);
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .project-filter-input-wrap {
+    position: relative;
+    flex: 1 1 320px;
+  }
+
+  .project-filter-input {
+    width: 100%;
+    height: 34px;
+    padding: 0 38px 0 12px;
+    border-radius: 9px;
+    border: 1px solid var(--border2);
+    background: var(--bg3);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: border-color .16s ease, box-shadow .16s ease;
+  }
+
+  .project-filter-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(91,156,246,.12);
+  }
+
+  .project-filter-input::placeholder { color: var(--text3); }
+
+  .project-filter-clear {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    border: none;
+    border-radius: 7px;
+    background: rgba(255,255,255,.06);
+    color: var(--text3);
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color .15s, background .15s;
+  }
+
+  .project-filter-clear:hover {
+    color: var(--text);
+    background: rgba(255,255,255,.12);
+  }
+
+  .project-filter-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text3);
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,.035);
+    padding: 7px 10px;
+    border-radius: 8px;
+    white-space: nowrap;
+  }
+
+  .project-filter-empty {
+    display: none;
+    margin: 10px 28px 2px;
+    padding: 12px 14px;
+    border: 1px dashed var(--border2);
+    border-radius: 10px;
+    color: var(--text3);
+    font-size: 12.5px;
+    text-align: center;
+    background: rgba(255,255,255,.018);
+  }
+
+  .project-filter-empty.visible { display: block; }
+
+  body[data-theme="day"] .project-filter-inner {
+    background: rgba(255,255,255,.45);
+    border-color: var(--border);
+  }
+
+  body[data-theme="day"] .project-filter-input {
+    background: rgba(255,255,255,.78);
+    border-color: var(--border2);
+    color: var(--text);
+  }
+
+  body[data-theme="day"] .project-filter-clear {
+    background: rgba(47,102,208,.08);
+  }
+
+  @media(max-width: 768px) {
+    .project-filter-bar { padding: 10px 16px 0; }
+    .project-filter-inner { flex-wrap: wrap; }
+    .project-filter-label { width: 100%; }
+    .project-filter-count { margin-left: auto; }
+    .project-filter-empty { margin-left: 16px; margin-right: 16px; }
+  }
+
+
   /* ── PROJECT GRID NAV ── */
   .tab-nav-wrapper {
     background: var(--bg2);
@@ -623,6 +749,16 @@
     text-align: left;
     border-bottom: 1px solid var(--border);
     white-space: nowrap;
+  }
+
+  .bom-table thead th.th-center,
+  #stickyHead th.th-center {
+    text-align: center !important;
+  }
+
+  .bom-table thead th.th-right,
+  #stickyHead th.th-right {
+    text-align: right !important;
   }
 
   /* Sticky cloned header bar */
@@ -1202,6 +1338,85 @@
   body[data-theme="day"] .header-report-title .report-name { color: rgba(15,23,42,.92); text-shadow: none; }
 
 
+
+
+  /* ── PROJECT CARDS: professional compact style ── */
+  .tab-nav {
+    padding: 18px 30px;
+    grid-template-columns: repeat(auto-fill, minmax(178px, 1fr));
+    gap: 10px;
+  }
+  .tab-nav button {
+    min-height: 66px;
+    padding: 11px 13px 11px 15px;
+    border-radius: 12px;
+    font-size: 11.4px;
+    line-height: 1.32;
+    letter-spacing: .025em;
+    color: var(--text2);
+    background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.018)), var(--bg3);
+    border-color: rgba(255,255,255,.085);
+    box-shadow: 0 4px 12px rgba(0,0,0,.16), inset 0 1px 0 rgba(255,255,255,.045);
+  }
+  .tab-nav button::before {
+    width: 3px;
+    background: rgba(91,156,246,.62);
+    opacity: .85;
+  }
+  .tab-nav button::after { content: none; }
+  .tab-nav button:hover {
+    transform: translateY(-1px);
+    border-color: rgba(91,156,246,.34);
+    color: var(--text);
+    background: linear-gradient(180deg, rgba(91,156,246,.075), rgba(255,255,255,.020)), var(--bg3);
+    box-shadow: 0 7px 16px rgba(0,0,0,.20), inset 0 1px 0 rgba(255,255,255,.055);
+  }
+  .tab-nav button .tab-icon {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 6px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    background: rgba(91,156,246,.10);
+    border: 1px solid rgba(91,156,246,.16);
+    box-shadow: none;
+  }
+  .tab-nav button.active {
+    transform: translateY(-1px) !important;
+    background: linear-gradient(180deg, rgba(91,156,246,.12), rgba(91,156,246,.035)), var(--bg3) !important;
+    border-color: rgba(91,156,246,.48) !important;
+    box-shadow: 0 0 0 1px rgba(91,156,246,.18), 0 6px 16px rgba(0,0,0,.20) !important;
+  }
+  .tab-nav button.active::before { width: 3px !important; }
+  .tab-nav button.active .tab-icon { transform: none !important; }
+  body[data-theme="day"] .tab-nav button {
+    background: linear-gradient(180deg, rgba(255,255,255,.74), rgba(255,255,255,.42)), var(--bg3);
+    border-color: rgba(173,188,204,.68);
+    box-shadow: 0 5px 14px rgba(23,32,51,.075), inset 0 1px 0 rgba(255,255,255,.62);
+  }
+  body[data-theme="day"] .tab-nav button:hover {
+    border-color: rgba(47,102,208,.32);
+    background: linear-gradient(180deg, rgba(47,102,208,.075), rgba(255,255,255,.52)), var(--bg3);
+    box-shadow: 0 8px 18px rgba(23,32,51,.10), inset 0 1px 0 rgba(255,255,255,.70);
+  }
+  body[data-theme="day"] .tab-nav button .tab-icon {
+    background: rgba(47,102,208,.075);
+    border-color: rgba(47,102,208,.14);
+  }
+  body[data-theme="day"] .tab-nav button.active {
+    background: linear-gradient(180deg, rgba(47,102,208,.11), rgba(255,255,255,.52)), var(--bg3) !important;
+    border-color: rgba(47,102,208,.42) !important;
+    box-shadow: 0 0 0 1px rgba(47,102,208,.16), 0 7px 16px rgba(23,32,51,.09) !important;
+  }
+  @media(max-width: 768px) {
+    .tab-nav { padding: 14px 16px; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+    .tab-nav button { min-height: 62px; font-size: 10.8px; padding: 10px 11px 10px 13px; }
+    .tab-nav button .tab-icon { width: 22px; height: 22px; font-size: 14px; margin-bottom: 5px; }
+  }
+
   /* ── PERFORMANCE TWEAKS ── */
   .bom-table tbody tr {
     content-visibility: auto;
@@ -1225,14 +1440,14 @@
       <input type="file" id="excelFileInput" class="file-input-hidden" accept=".xlsx,.xls">
       <label for="excelFileInput" class="upload-btn" id="uploadBtn"><span class="upload-btn-text">Excel Yükle</span></label>
       <button class="save-btn" id="saveBtnEl" onclick="saveReport()" style="display: inline-flex;" disabled="">Sıkıştırılıyor…</button>
-      <span class="upload-date-pill" id="uploadDatePill" style="display: flex;">15.06.2026  12:06</span>
+      <span class="upload-date-pill" id="uploadDatePill" style="display: flex;">15.06.2026  12:30</span>
       <button type="button" id="theme-toggle-btn" class="theme-toggle-btn" aria-label="Gündüz moduna geç" title="Gündüz moduna geç" data-theme-bound="1">
         <span class="theme-icon">☾</span>
       </button>
     </div>
   </div>
 </header>
-<div class="tab-nav-wrapper visible" id="tabNavWrapper"><nav class="tab-nav" id="tabNav"><button type="button" data-tab="tab_12m_fuar_ebus___15_06_2026" class=""><span class="tab-icon">🚌</span>12M FUAR EBUS</button><button type="button" data-tab="tab_18m_ebus__nser____15_06_2026" class=""><span class="tab-icon">🚌</span>18M EBUS ÖNSERİ</button><button type="button" data-tab="tab_antalya_tramvay___15_06_2026" class=""><span class="tab-icon">🚊</span>ANTALYA TRAMVAY</button><button type="button" data-tab="tab_belgrad100_tramvay___15_06_2026" class=""><span class="tab-icon">🚊</span>BELGRAD100 TRAMVAY</button><button type="button" data-tab="tab_belgrad25_tramvay___15_06_2026" class=""><span class="tab-icon">🚊</span>BELGRAD25 TRAMVAY</button><button type="button" data-tab="tab_bursa_tramvay___15_06_2026" class=""><span class="tab-icon">🚊</span>BURSA TRAMVAY</button><button type="button" data-tab="tab_elblag_tramvay___15_06_2026" class=""><span class="tab-icon">🚊</span>ELBLAG TRAMVAY</button><button type="button" data-tab="tab_gebze_darica_metro___15_06_2026" class=""><span class="tab-icon">🚇</span>GEBZE DARICA METRO</button><button type="button" data-tab="tab_iasi_16_tramvay___15_06_2026" class=""><span class="tab-icon">🚊</span>IASI 16 TRAMVAY</button><button type="button" data-tab="tab_iasi_18_tramvay___15_06_2026" class=""><span class="tab-icon">🚊</span>IASI 18 TRAMVAY</button><button type="button" data-tab="tab_izmir_aliosbi_12m_ebus___15_06_" class=""><span class="tab-icon">🚌</span>IZMIR ALIOSBI 12M EBUS</button><button type="button" data-tab="tab_kayser__5_tramvay___15_06_2026" class=""><span class="tab-icon">🚊</span>KAYSERİ 5 TRAMVAY</button><button type="button" data-tab="tab_kayser__6_tramvay___15_06_2026" class=""><span class="tab-icon">🚊</span>KAYSERİ 6 TRAMVAY</button><button type="button" data-tab="tab_kocael__tramvay___15_06_2026" class=""><span class="tab-icon">🚊</span>KOCAELİ TRAMVAY</button><button type="button" data-tab="tab_kocael__5_tramvay___15_06_2026" class=""><span class="tab-icon">🚊</span>KOCAELİ+5 TRAMVAY</button><button type="button" data-tab="tab_napol__tramvay___15_06_2026" class=""><span class="tab-icon">🚊</span>NAPOLİ TRAMVAY</button><button type="button" data-tab="tab_onseri_trolleybus___15_06_2026" class=""><span class="tab-icon">🚎</span>ONSERI TROLLEYBUS</button><button type="button" data-tab="tab_prag_trolleybus___15_06_2026" class=""><span class="tab-icon">🚎</span>PRAG TROLLEYBUS</button><button type="button" data-tab="tab_samsun_tramvay___15_06_2026" class=""><span class="tab-icon">🚊</span>SAMSUN TRAMVAY</button><button type="button" data-tab="tab_samsun_2_tramvay___15_06_2026" class=""><span class="tab-icon">🚊</span>SAMSUN+2 TRAMVAY</button><button type="button" data-tab="tab_siemens_orl_mc___15_06_2026" class=""><span class="tab-icon">⚡</span>SIEMENS ORL MC</button><button type="button" data-tab="tab_siemens_orl_t___15_06_2026" class=""><span class="tab-icon">⚡</span>SIEMENS ORL T</button><button type="button" data-tab="tab_tim10_tramvay___15_06_2026" class=""><span class="tab-icon">🚊</span>TIM10 TRAMVAY</button><button type="button" data-tab="tab_tim17_tramvay___15_06_2026" class=""><span class="tab-icon">🚊</span>TIM17 TRAMVAY</button><button type="button" data-tab="tab_tim23_tramvay___15_06_2026" class=""><span class="tab-icon">🚊</span>TIM23 TRAMVAY</button><button type="button" data-tab="tab_timisoara_12m_trolleybus___15_0" class=""><span class="tab-icon">🚎</span>TIMISOARA 12M TROLLEYBUS</button><button type="button" data-tab="tab_timisoara_18m_trolleybus___15_0" class=""><span class="tab-icon">🚎</span>TIMISOARA 18M TROLLEYBUS</button><button type="button" data-tab="tab__stanbul_metro___15_06_2026" class=""><span class="tab-icon">🚇</span>İSTANBUL METRO</button></nav></div>
+<div class="tab-nav-wrapper visible" id="tabNavWrapper"><div class="project-filter-bar" aria-label="Proje arama"><div class="project-filter-inner"><span class="project-filter-label">PROJE ARA</span><div class="project-filter-input-wrap"><input type="text" class="project-filter-input" id="projectSearchInput" placeholder="Proje adı yazın..."><button type="button" class="project-filter-clear" id="projectSearchClear" aria-label="Proje aramasını temizle">×</button></div><span class="project-filter-count" id="projectSearchCount">0 proje</span></div></div><div class="project-filter-empty" id="projectSearchEmpty">Aramanızla eşleşen proje bulunamadı.</div><nav class="tab-nav" id="tabNav"><button type="button" data-tab="tab_12m_fuar_ebus___15_06_2026" data-full="12M FUAR EBUS" class=""><span class="tab-icon">🚌</span>12M FUAR EBUS</button><button type="button" data-tab="tab_18m_ebus__nser____15_06_2026" data-full="18M EBUS ÖNSERİ" class=""><span class="tab-icon">🚌</span>18M EBUS ÖNSERİ</button><button type="button" data-tab="tab_antalya_tramvay___15_06_2026" data-full="ANTALYA TRAMVAY" class=""><span class="tab-icon">🚊</span>ANTALYA TRAMVAY</button><button type="button" data-tab="tab_belgrad100_tramvay___15_06_2026" data-full="BELGRAD100 TRAMVAY" class=""><span class="tab-icon">🚊</span>BELGRAD100 TRAMVAY</button><button type="button" data-tab="tab_belgrad25_tramvay___15_06_2026" data-full="BELGRAD25 TRAMVAY" class=""><span class="tab-icon">🚊</span>BELGRAD25 TRAMVAY</button><button type="button" data-tab="tab_bursa_tramvay___15_06_2026" data-full="BURSA TRAMVAY" class=""><span class="tab-icon">🚊</span>BURSA TRAMVAY</button><button type="button" data-tab="tab_elblag_tramvay___15_06_2026" data-full="ELBLAG TRAMVAY" class=""><span class="tab-icon">🚊</span>ELBLAG TRAMVAY</button><button type="button" data-tab="tab_gebze_darica_metro___15_06_2026" data-full="GEBZE DARICA METRO" class=""><span class="tab-icon">🚇</span>GEBZE DARICA METRO</button><button type="button" data-tab="tab_iasi_16_tramvay___15_06_2026" data-full="IASI 16 TRAMVAY" class=""><span class="tab-icon">🚊</span>IASI 16 TRAMVAY</button><button type="button" data-tab="tab_iasi_18_tramvay___15_06_2026" data-full="IASI 18 TRAMVAY" class=""><span class="tab-icon">🚊</span>IASI 18 TRAMVAY</button><button type="button" data-tab="tab_izmir_aliosbi_12m_ebus___15_06_" data-full="IZMIR ALIOSBI 12M EBUS" class=""><span class="tab-icon">🚌</span>IZMIR ALIOSBI 12M EBUS</button><button type="button" data-tab="tab_kayser__5_tramvay___15_06_2026" data-full="KAYSERİ 5 TRAMVAY" class=""><span class="tab-icon">🚊</span>KAYSERİ 5 TRAMVAY</button><button type="button" data-tab="tab_kayser__6_tramvay___15_06_2026" data-full="KAYSERİ 6 TRAMVAY" class=""><span class="tab-icon">🚊</span>KAYSERİ 6 TRAMVAY</button><button type="button" data-tab="tab_kocael__tramvay___15_06_2026" data-full="KOCAELİ TRAMVAY" class=""><span class="tab-icon">🚊</span>KOCAELİ TRAMVAY</button><button type="button" data-tab="tab_kocael__5_tramvay___15_06_2026" data-full="KOCAELİ+5 TRAMVAY" class=""><span class="tab-icon">🚊</span>KOCAELİ+5 TRAMVAY</button><button type="button" data-tab="tab_napol__tramvay___15_06_2026" data-full="NAPOLİ TRAMVAY" class=""><span class="tab-icon">🚊</span>NAPOLİ TRAMVAY</button><button type="button" data-tab="tab_onseri_trolleybus___15_06_2026" data-full="ONSERI TROLLEYBUS" class=""><span class="tab-icon">🚎</span>ONSERI TROLLEYBUS</button><button type="button" data-tab="tab_prag_trolleybus___15_06_2026" data-full="PRAG TROLLEYBUS" class=""><span class="tab-icon">🚎</span>PRAG TROLLEYBUS</button><button type="button" data-tab="tab_samsun_tramvay___15_06_2026" data-full="SAMSUN TRAMVAY" class=""><span class="tab-icon">🚊</span>SAMSUN TRAMVAY</button><button type="button" data-tab="tab_samsun_2_tramvay___15_06_2026" data-full="SAMSUN+2 TRAMVAY" class=""><span class="tab-icon">🚊</span>SAMSUN+2 TRAMVAY</button><button type="button" data-tab="tab_siemens_orl_mc___15_06_2026" data-full="SIEMENS ORL MC" class=""><span class="tab-icon">⚡</span>SIEMENS ORL MC</button><button type="button" data-tab="tab_siemens_orl_t___15_06_2026" data-full="SIEMENS ORL T" class=""><span class="tab-icon">⚡</span>SIEMENS ORL T</button><button type="button" data-tab="tab_tim10_tramvay___15_06_2026" data-full="TIM10 TRAMVAY" class=""><span class="tab-icon">🚊</span>TIM10 TRAMVAY</button><button type="button" data-tab="tab_tim17_tramvay___15_06_2026" data-full="TIM17 TRAMVAY" class=""><span class="tab-icon">🚊</span>TIM17 TRAMVAY</button><button type="button" data-tab="tab_tim23_tramvay___15_06_2026" data-full="TIM23 TRAMVAY" class=""><span class="tab-icon">🚊</span>TIM23 TRAMVAY</button><button type="button" data-tab="tab_timisoara_12m_trolleybus___15_0" data-full="TIMISOARA 12M TROLLEYBUS" class=""><span class="tab-icon">🚎</span>TIMISOARA 12M TROLLEYBUS</button><button type="button" data-tab="tab_timisoara_18m_trolleybus___15_0" data-full="TIMISOARA 18M TROLLEYBUS" class=""><span class="tab-icon">🚎</span>TIMISOARA 18M TROLLEYBUS</button><button type="button" data-tab="tab__stanbul_metro___15_06_2026" data-full="İSTANBUL METRO" class=""><span class="tab-icon">🚇</span>İSTANBUL METRO</button></nav></div>
 <div class="search-bar-wrapper visible" id="searchBarWrapper">
   <div class="search-inner">
     <div class="search-field">
@@ -1258,7 +1473,7 @@
       </div>
     </div>
     <button class="search-go-btn" id="searchGoBtn" title="Ara">🔍</button>
-    <div class="search-count" id="searchCount">33.948 satır</div>
+    <div class="search-count" id="searchCount">25.735 satır</div>
   </div>
 </div>
 <div class="pane-loading" id="paneLoading"><div class="pane-loading-spinner"></div><div class="pane-loading-text">Yükleniyor</div><div class="pane-loading-sub" id="paneLoadingName"></div></div>
@@ -1336,6 +1551,17 @@ function _hideLoading(){
   var ov=document.getElementById('paneLoading');
   if (ov) ov.classList.remove('visible');
 }
+function _withLoading(label, fn){
+  var ov=document.getElementById('paneLoading'), nm=document.getElementById('paneLoadingName');
+  if (nm) nm.textContent = label || 'Yükleniyor';
+  if (ov) ov.classList.add('visible');
+  requestAnimationFrame(function(){
+    setTimeout(function(){
+      try { fn(); }
+      finally { requestAnimationFrame(function(){ _hideLoading(); }); }
+    }, 0);
+  });
+}
 function _applyTheme(mode){
   var theme = mode === 'day' ? 'day' : 'night';
   if (document.body) document.body.setAttribute('data-theme', theme);
@@ -1387,6 +1613,44 @@ function _count(tabId, visible, total, filtered){
   if (!c) return;
   if (filtered) c.textContent = visible.toLocaleString('tr-TR') + ' / ' + total.toLocaleString('tr-TR') + ' satır';
   else c.textContent = total.toLocaleString('tr-TR') + ' satır';
+}
+
+
+function _pNorm(v){
+  return String(v==null?'':v).toLocaleLowerCase('tr-TR').replace(/ı/g,'i').replace(/İ/g,'i').normalize('NFD').replace(/[̀-ͯ]/g,'').trim();
+}
+function _updateProjectSearch(){
+  var nav=document.getElementById('tabNav');
+  if(!nav) return;
+  var input=document.getElementById('projectSearchInput');
+  var count=document.getElementById('projectSearchCount');
+  var empty=document.getElementById('projectSearchEmpty');
+  var q=_pNorm(input?input.value:'');
+  var btns=nav.querySelectorAll('button[data-tab]');
+  var total=btns.length, visible=0;
+  btns.forEach(function(btn){
+    var full=btn.dataset.full||btn.textContent||'';
+    var hay=_pNorm(full+' '+(btn.textContent||''));
+    var show=!q || hay.indexOf(q)!==-1;
+    btn.style.display=show?'':'none';
+    if(show) visible++;
+  });
+  if(count) count.textContent = q ? (visible.toLocaleString('tr-TR')+' / '+total.toLocaleString('tr-TR')+' proje') : (total.toLocaleString('tr-TR')+' proje');
+  if(empty) empty.classList.toggle('visible', !!q && visible===0);
+}
+function _initProjectSearch(){
+  var input=document.getElementById('projectSearchInput');
+  var clear=document.getElementById('projectSearchClear');
+  if(input && !input.dataset.bound){
+    input.dataset.bound='1';
+    input.addEventListener('input', _updateProjectSearch);
+    input.addEventListener('keydown', function(e){ if(e.key==='Escape'){ input.value=''; _updateProjectSearch(); } });
+  }
+  if(clear && !clear.dataset.bound){
+    clear.dataset.bound='1';
+    clear.addEventListener('click', function(){ if(input){ input.value=''; _updateProjectSearch(); input.focus(); } });
+  }
+  _updateProjectSearch();
 }
 
 function _showSelect(){
@@ -1539,8 +1803,9 @@ async function _boot(){
     var cb=document.getElementById('clearBno'), cn=document.getElementById('clearName');
     if(bi) bi.onkeydown=function(e){ if(e.key==='Enter') run(); };
     if(ni) ni.onkeydown=function(e){ if(e.key==='Enter') run(); };
-    if(cb) cb.onclick=function(){ if(bi) bi.value=''; run(); if(bi) bi.focus(); };
-    if(cn) cn.onclick=function(){ if(ni) ni.value=''; run(); if(ni) ni.focus(); };
+    if(cb) cb.onclick=function(){ if(bi) bi.value=''; _withLoading('Filtre temizleniyor…', run); if(bi) bi.focus(); };
+    if(cn) cn.onclick=function(){ if(ni) ni.value=''; _withLoading('Filtre temizleniyor…', run); if(ni) ni.focus(); };
+    _initProjectSearch();
     _showSelect();
     // Son güvenlik: açılış paint'inden sonra da tüm active durumlarını temizle.
     requestAnimationFrame(function(){
