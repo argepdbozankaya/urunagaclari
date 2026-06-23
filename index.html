@@ -751,6 +751,23 @@
     white-space: nowrap;
   }
 
+
+  /* Başlık ve veri hücrelerinin aynı kolon ızgarasına oturması */
+  .bom-table thead th.th-kademe { width: 92px; }
+  .bom-table thead th.th-bno    { width: 168px; }
+  .bom-table thead th.th-rev    { width: 70px; }
+  .bom-table thead th.th-name   { width: 38%; }
+  .bom-table thead th.th-miktar { width: 112px; }
+  .bom-table thead th.th-birim  { width: 82px; }
+  .bom-table thead th.th-yeni   { width: 140px; }
+  .bom-table col.col-kademe { width: 92px; }
+  .bom-table col.col-bno    { width: 168px; }
+  .bom-table col.col-rev    { width: 70px; }
+  .bom-table col.col-name   { width: 38%; }
+  .bom-table col.col-miktar { width: 112px; }
+  .bom-table col.col-birim  { width: 82px; }
+  .bom-table col.col-yeni   { width: 140px; }
+
   .bom-table thead th.th-center,
   #stickyHead th.th-center {
     text-align: center !important;
@@ -1425,6 +1442,117 @@
   .tab-pane:not(.active) { display: none !important; }
   .table-scroll { will-change: scroll-position; }
 
+
+  /* ── TABLE READABILITY OVERRIDES ── */
+  .bom-table {
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.42;
+  }
+  .bom-table thead th,
+  #stickyHead th {
+    color: #e4eaf5;
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    font-size: 11.5px;
+    font-weight: 800;
+    letter-spacing: .045em;
+    background: #242b38;
+  }
+  .bom-table tbody td {
+    color: #d7deea;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.45;
+  }
+  .bom-table tbody tr {
+    border-bottom-color: rgba(255,255,255,.06);
+  }
+  .bom-table tbody tr:hover td {
+    background: rgba(91,156,246,.075);
+    color: #f4f7fb;
+  }
+  .bom-table tr.lv1 td {
+    color: #ffffff;
+    font-weight: 800;
+    background: rgba(91,156,246,.105);
+  }
+  .bom-table tr.lv2 td {
+    color: #eef3fb;
+    font-weight: 700;
+    background: rgba(255,255,255,.04);
+  }
+  .bom-table tr.lv3 td { color: #dbe3ef; font-weight: 600; }
+  .bom-table tr.lv4 td,
+  .bom-table tr.lv5 td,
+  .bom-table tr.lv6 td,
+  .bom-table tr.lv7 td { color: #c7d2e2; opacity: 1; }
+
+  .bom-table td.td-kademe,
+  .bom-table td.td-rev,
+  .bom-table td.td-birim,
+  .bom-table td.td-yeni {
+    color: #bdc9da;
+  }
+  .bom-table td.td-bno {
+    color: #90c4ff;
+    font-weight: 700;
+  }
+  .bom-table td.td-name {
+    color: #eef2f8;
+    font-weight: 600;
+  }
+  .bom-table td.td-miktar {
+    color: #ffd36a;
+    font-weight: 800;
+  }
+  .kdot { color: #6f8099; }
+
+  body[data-theme="day"] .bom-table thead th,
+  body[data-theme="day"] #stickyHead th {
+    color: #1f2a3d;
+    background: #d4deeb;
+  }
+  body[data-theme="day"] .bom-table tbody td {
+    color: #26364a;
+  }
+  body[data-theme="day"] .bom-table tbody tr {
+    border-bottom-color: rgba(23,32,51,.10);
+  }
+  body[data-theme="day"] .bom-table tbody tr:hover td {
+    background: rgba(47,102,208,.085);
+    color: #111827;
+  }
+  body[data-theme="day"] .bom-table tr.lv1 td {
+    color: #0f172a;
+    background: rgba(47,102,208,.11);
+  }
+  body[data-theme="day"] .bom-table tr.lv2 td {
+    color: #172033;
+    background: rgba(47,102,208,.055);
+    opacity: 1;
+  }
+  body[data-theme="day"] .bom-table tr.lv3 td { color: #27384d; }
+  body[data-theme="day"] .bom-table tr.lv4 td,
+  body[data-theme="day"] .bom-table tr.lv5 td,
+  body[data-theme="day"] .bom-table tr.lv6 td,
+  body[data-theme="day"] .bom-table tr.lv7 td { color: #42546b; opacity: 1; }
+  body[data-theme="day"] .bom-table td.td-kademe,
+  body[data-theme="day"] .bom-table td.td-rev,
+  body[data-theme="day"] .bom-table td.td-birim,
+  body[data-theme="day"] .bom-table td.td-yeni {
+    color: #4e6077 !important;
+  }
+  body[data-theme="day"] .bom-table td.td-bno {
+    color: #164aa6 !important;
+  }
+  body[data-theme="day"] .bom-table td.td-name {
+    color: #111827 !important;
+  }
+  body[data-theme="day"] .bom-table td.td-miktar {
+    color: #9a5207 !important;
+  }
+  body[data-theme="day"] .kdot { color: #8b9bb0; opacity: .72; }
+
 </style>
 
 <style>.upload-btn,.save-btn{display:none!important}</style>
@@ -1440,7 +1568,7 @@
       <input type="file" id="excelFileInput" class="file-input-hidden" accept=".xlsx,.xls">
       <label for="excelFileInput" class="upload-btn" id="uploadBtn"><span class="upload-btn-text">Excel Yükle</span></label>
       <button class="save-btn" id="saveBtnEl" onclick="saveReport()" style="display: inline-flex;" disabled="">Sıkıştırılıyor…</button>
-      <span class="upload-date-pill" id="uploadDatePill" style="display: flex;">22.06.2026  17:32</span>
+      <span class="upload-date-pill" id="uploadDatePill" style="display: flex;">23.06.2026  09:17</span>
       <button type="button" id="theme-toggle-btn" class="theme-toggle-btn" aria-label="Gündüz moduna geç" title="Gündüz moduna geç" data-theme-bound="1">
         <span class="theme-icon">☾</span>
       </button>
@@ -1473,7 +1601,7 @@
       </div>
     </div>
     <button class="search-go-btn" id="searchGoBtn" title="Ara">🔍</button>
-    <div class="search-count" id="searchCount"></div>
+    <div class="search-count" id="searchCount">1.569 satır</div>
   </div>
 </div>
 <div class="pane-loading" id="paneLoading"><div class="pane-loading-spinner"></div><div class="pane-loading-text">Yükleniyor</div><div class="pane-loading-sub" id="paneLoadingName"></div></div>
@@ -1511,18 +1639,45 @@ function _esc(s){
 function _cellClass(i){
   return ['td-kademe','td-bno','td-rev','td-name','td-miktar','td-birim','td-yeni'][i] || '';
 }
+function _tdClassByHeader(h){
+  var hh=String(h||'').toLowerCase().replace(/./g,'').trim();
+  if(hh==='kademe') return 'td-kademe';
+  if(hh==='bileşen no'||hh==='bilesen no') return 'td-bno';
+  if(hh==='rev'||hh==='revizyon') return 'td-rev';
+  if(hh==='nesne kısa metni'||hh==='nesne kisa metni') return 'td-name';
+  if(hh==='miktar') return 'td-miktar';
+  if(hh==='birim') return 'td-birim';
+  if(hh==='yeni kademe') return 'td-yeni';
+  return '';
+}
+function _colClassByHeader(h){
+  var hh=String(h||'').toLowerCase().replace(/./g,'').trim();
+  if(hh==='kademe') return 'col-kademe';
+  if(hh==='bileşen no'||hh==='bilesen no') return 'col-bno';
+  if(hh==='rev'||hh==='revizyon') return 'col-rev';
+  if(hh==='nesne kısa metni'||hh==='nesne kisa metni') return 'col-name';
+  if(hh==='miktar') return 'col-miktar';
+  if(hh==='birim') return 'col-birim';
+  if(hh==='yeni kademe') return 'col-yeni';
+  return '';
+}
 function _buildTbl(tabId){
   var d = _SD[tabId];
   if (!d) return '<div class="empty-row"><td>Veri bulunamadı.</td></div>';
   var title=d[0]||'', subtitle=d[1]||'', headers=d[2]||[], rows=d[3]||[];
   var h = '<div class="pane-header"><div><div class="pane-title">'+_esc(title)+'</div><div class="pane-subtitle">'+_esc(subtitle)+'</div></div><div class="pane-badge">📦 '+rows.length.toLocaleString('tr-TR')+' bileşen</div></div>';
-  h += '<div class="table-wrap"><div class="table-scroll"><table class="bom-table" id="tbl_'+_esc(tabId)+'"><thead><tr>';
-  for (var a=0;a<headers.length;a++) { var hh=String(headers[a]||'').toLowerCase().replace(/./g,'').trim(); var cls=(hh==='rev'||hh==='revizyon'||hh==='birim')?' class="th-center"':(hh==='miktar'?' class="th-right"':''); h += '<th'+cls+'>'+_esc(headers[a])+'</th>'; }
+  h += '<div class="table-wrap"><div class="table-scroll"><table class="bom-table" id="tbl_'+_esc(tabId)+'"><colgroup>';
+  for (var cg=0;cg<headers.length;cg++) { var cc=_colClassByHeader(headers[cg]); h += '<col'+(cc?' class="'+cc+'"':'')+'>'; }
+  h += '</colgroup><thead><tr>';
+  for (var a=0;a<headers.length;a++) { var hh=String(headers[a]||'').toLowerCase().replace(/./g,'').trim(); var cls=''; if(hh==='kademe') cls='th-kademe'; else if(hh==='bileşen no'||hh==='bilesen no') cls='th-bno'; else if(hh==='rev'||hh==='revizyon') cls='th-rev th-center'; else if(hh==='nesne kısa metni'||hh==='nesne kisa metni') cls='th-name'; else if(hh==='miktar') cls='th-miktar th-right'; else if(hh==='birim') cls='th-birim th-center'; else if(hh==='yeni kademe') cls='th-yeni'; h += '<th'+(cls?' class="'+cls+'"':'')+'>'+_esc(headers[a])+'</th>'; }
   h += '</tr></thead><tbody>';
   for (var r=0;r<rows.length;r++) {
     var row = rows[r], cells = row[4] || [];
     h += '<tr class="'+_esc(row[0]||'')+'" data-bno="'+_esc(row[1]||'')+'" data-name="'+_esc(row[2]||'')+'" data-wbs="'+_esc(row[3]||'')+'">';
-    for (var c=0;c<cells.length;c++) h += '<td class="'+_cellClass(c)+'">'+_esc(cells[c]||'')+'</td>';
+    for (var c=0;c<cells.length;c++) {
+      var tdCls = _tdClassByHeader(headers[c]);
+      h += '<td'+(tdCls?' class="'+tdCls+'"':'')+'>'+_esc(cells[c]||'')+'</td>';
+    }
     h += '</tr>';
   }
   h += '</tbody></table></div></div>';
