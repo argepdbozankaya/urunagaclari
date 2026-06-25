@@ -212,6 +212,54 @@
   .save-btn:disabled { cursor: progress; opacity: .82; }
   .save-btn:disabled::before { content: "\231B"; animation: headerBtnPulse .9s ease-in-out infinite; }
 
+
+  /* ── CLEAR DATA BUTTON ── */
+  .clear-data-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 28px;
+    padding: 0 10px 0 8px;
+    border-radius: 8px;
+    border: 1px solid rgba(248,113,113,.52);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .02em;
+    cursor: pointer;
+    white-space: nowrap;
+    background: linear-gradient(135deg, rgba(248,113,113,.26), rgba(248,168,75,.08));
+    box-shadow: 0 4px 10px rgba(248,113,113,.10);
+    transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease, opacity .16s;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  .clear-data-btn::before {
+    content: "×";
+    color: #ffd4d4;
+    background: rgba(248,113,113,.22);
+    width: 16px;
+    height: 16px;
+    border-radius: 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 16px;
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.12);
+  }
+  .clear-data-btn:hover {
+    transform: translateY(-1px);
+    border-color: rgba(248,113,113,.82);
+    box-shadow: 0 8px 18px rgba(0,0,0,.22), 0 0 0 2px rgba(255,255,255,.05);
+  }
+  .clear-data-btn:active { transform: translateY(0); }
+
   .upload-btn::before {
     content: "↑";
     color: #b9d4ff;
@@ -731,10 +779,10 @@
   .table-scroll::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
 
   .bom-table {
-    width: 100%;
+    width: auto;
     border-collapse: collapse;
     font-size: 13.5px;
-    min-width: 1065px;
+    min-width: max-content;
     table-layout: fixed;
   }
 
@@ -756,14 +804,14 @@
 
   /* Başlık ve veri hücrelerinin aynı kolon ızgarasına oturması */
   /* table-layout:fixed → genişlikler col ile belirlenir, th'ye gerek yok */
-  .bom-table col.col-kademe { width: 80px; }
-  .bom-table col.col-bno    { width: 150px; }
-  .bom-table col.col-rev    { width: 55px; }
-  .bom-table col.col-name   { width: 240px; }
-  .bom-table col.col-abc    { width: 90px; }
-  .bom-table col.col-desc   { width: 220px; }
-  .bom-table col.col-miktar { width: 100px; }
-  .bom-table col.col-yeni   { width: 130px; }
+  .bom-table col.col-kademe { width: 60px; }
+  .bom-table col.col-bno    { width: 80px; }
+  .bom-table col.col-rev    { width: 40px; }
+  .bom-table col.col-name   { width: 280px; }
+  .bom-table col.col-abc    { width: 42px; }
+  .bom-table col.col-desc   { width: 205px; }
+  .bom-table col.col-miktar { width: 57px; }
+  .bom-table col.col-yeni   { width: 92px; }
 
   .bom-table thead th.th-center,
   #stickyHead th.th-center {
@@ -867,6 +915,7 @@
     text-overflow: ellipsis;
     text-align: left;
     padding-left: 10px;
+    max-width: 0;
   }
 
   /* G sütunu (Miktar / Excel başlığı birebir) */
@@ -891,7 +940,7 @@
   .bom-table td.td-desc {
     font-size: 13px;
     color: var(--text2);
-    max-width: 320px;
+    max-width: 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1563,22 +1612,171 @@
 /* Tablo okunabilirlik ve sayfalama düzeni */
 .table-wrap{max-width:100%; margin:0 auto;}
 .table-scroll{border-radius:14px; overflow-x:auto; overflow-y:visible; max-height:none; min-height:auto;}
-.bom-table{width:100%; min-width:1260px; border-collapse:separate; border-spacing:0; table-layout:fixed;}
+.bom-table{width:auto; min-width:max-content; border-collapse:separate; border-spacing:0; table-layout:fixed;}
 .bom-table thead th{position:sticky; top:0; z-index:3; text-align:left; vertical-align:middle; line-height:1.2; white-space:normal; padding:12px 14px; font-size:12px; letter-spacing:.025em;}
 .bom-table thead th.th-center{ text-align:center; }
-.bom-table thead th.th-rev{white-space:nowrap; min-width:125px;}
+.bom-table thead th.th-rev{white-space:normal; word-break:break-word; min-width:44px;}
 .bom-table tbody td{vertical-align:top; text-align:left; padding:10px 14px; line-height:1.35; white-space:normal; word-break:break-word; overflow-wrap:anywhere;}
 .bom-table td.td-center{ text-align:left; }
 .bom-table td.td-miktar{ text-align:left; white-space:nowrap; }
 .bom-table td.td-rev,.bom-table td.td-abc{ text-align:center; white-space:nowrap; }
-.bom-table col.col-kademe{width:90px;}
-.bom-table col.col-bno{width:170px;}
-.bom-table col.col-rev{width:135px;}
-.bom-table col.col-name{width:320px;}
-.bom-table col.col-abc{width:90px;}
-.bom-table col.col-desc{width:300px;}
-.bom-table col.col-miktar{width:115px;}
-.bom-table col.col-yeni{width:145px;}
+.bom-table col.col-kademe{width:60px;}
+.bom-table col.col-bno{width:80px;}
+.bom-table col.col-rev{width:40px;}
+.bom-table col.col-name{width:280px;}
+.bom-table col.col-abc{width:42px;}
+.bom-table col.col-desc{width:205px;}
+.bom-table col.col-miktar{width:57px;}
+.bom-table col.col-yeni{width:92px;}
+
+/* ── TABLO AYAR PANELİ ── */
+#colWidthPanel{
+  display:none;
+  background:var(--bg2);
+  border:1px solid var(--border2);
+  border-radius:12px;
+  padding:0;
+  margin:0 0 10px 0;
+  font-family:'Space Grotesk',sans-serif;
+  box-shadow:0 4px 24px rgba(0,0,0,.22);
+  overflow:hidden;
+}
+#colWidthPanel.visible{ display:block; }
+
+/* Panel sekmeleri */
+.cp-tabs{
+  display:flex; border-bottom:1px solid var(--border2);
+  background:var(--bg3);
+}
+.cp-tab{
+  padding:10px 18px; font-size:11.5px; font-weight:700;
+  color:var(--text3); cursor:pointer; border:none; background:none;
+  font-family:'Space Grotesk',sans-serif; letter-spacing:.04em;
+  text-transform:uppercase; border-bottom:2px solid transparent;
+  margin-bottom:-1px; transition:color .15s;
+}
+.cp-tab:hover{ color:var(--text2); }
+.cp-tab.active{ color:var(--accent2); border-bottom-color:var(--accent2); }
+.cp-pane{ display:none; padding:16px 20px 14px; }
+.cp-pane.active{ display:block; }
+
+/* Panel başlık */
+.col-panel-hint{
+  font-size:11px; color:var(--text3); margin-bottom:14px;
+}
+
+/* Sütun grid */
+.col-sliders{
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px,1fr));
+  gap:14px 24px;
+}
+.col-slider-row{ display:flex; flex-direction:column; gap:5px; }
+.col-slider-top{ display:flex; align-items:center; justify-content:space-between; gap:6px; }
+.col-slider-label{
+  font-size:11.5px; font-weight:600; color:var(--text2);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; flex:1;
+}
+.col-slider-val{
+  font-size:11px; font-weight:700; color:var(--accent2);
+  background:rgba(91,156,246,.12); border-radius:4px;
+  padding:1px 6px; min-width:42px; text-align:center;
+  transition:background .15s; flex-shrink:0;
+}
+.col-slider-val.changed{ background:rgba(91,156,246,.3); }
+
+/* Hizalama butonları sütun yanında */
+.col-align-btns{ display:flex; gap:2px; flex-shrink:0; }
+.col-align-btn{
+  width:22px; height:22px; border-radius:4px; border:1px solid var(--border2);
+  background:rgba(255,255,255,.03); color:var(--text3); cursor:pointer;
+  font-size:12px; display:flex; align-items:center; justify-content:center;
+  transition:all .12s; padding:0; font-family:sans-serif;
+}
+.col-align-btn:hover{ background:rgba(91,156,246,.15); color:var(--text2); }
+.col-align-btn.active{ background:rgba(91,156,246,.25); color:var(--accent2); border-color:rgba(91,156,246,.5); }
+
+/* Slider */
+.col-slider-wrap{
+  position:relative; height:20px; display:flex; align-items:center;
+}
+.col-slider-track{
+  position:absolute; left:0; right:0; height:5px;
+  background:var(--border2); border-radius:3px; overflow:hidden;
+}
+.col-slider-fill{
+  height:100%; background:var(--accent2); border-radius:3px;
+  opacity:.55; transition:width .04s;
+}
+.col-slider-input{
+  position:absolute; left:0; right:0; width:100%;
+  -webkit-appearance:none; appearance:none;
+  background:transparent; height:20px;
+  cursor:pointer; outline:none; margin:0; z-index:1;
+}
+.col-slider-input::-webkit-slider-thumb{
+  -webkit-appearance:none; appearance:none;
+  width:16px; height:16px; border-radius:50%;
+  background:var(--accent2); border:2px solid var(--bg2);
+  box-shadow:0 1px 5px rgba(0,0,0,.4); cursor:pointer; transition:transform .1s;
+}
+.col-slider-input:hover::-webkit-slider-thumb{ transform:scale(1.2); }
+.col-slider-input:active::-webkit-slider-thumb{ transform:scale(1.1); background:#7eb3ff; }
+.col-slider-input::-moz-range-thumb{
+  width:16px; height:16px; border-radius:50%;
+  background:var(--accent2); border:2px solid var(--bg2);
+  box-shadow:0 1px 5px rgba(0,0,0,.4); cursor:pointer;
+}
+.col-slider-minmax{
+  display:flex; justify-content:space-between;
+  font-size:10px; color:var(--text3); margin-top:1px;
+}
+
+/* Tablo genişliği sekmesi */
+.tbl-width-row{ display:flex; flex-direction:column; gap:6px; max-width:500px; }
+.tbl-width-presets{ display:flex; gap:6px; flex-wrap:wrap; margin-bottom:4px; }
+.tbl-width-preset{
+  padding:5px 12px; border-radius:6px; font-size:11.5px; font-weight:600;
+  cursor:pointer; border:1px solid var(--border2);
+  background:rgba(255,255,255,.04); color:var(--text2);
+  font-family:'Space Grotesk',sans-serif; transition:all .12s;
+}
+.tbl-width-preset:hover{ background:rgba(91,156,246,.15); }
+.tbl-width-preset.active{ background:rgba(91,156,246,.25); color:var(--accent2); border-color:rgba(91,156,246,.5); }
+
+/* Alt aksiyonlar */
+.col-panel-actions{
+  padding:12px 20px; display:flex; gap:8px; align-items:center;
+  border-top:1px solid var(--border2); background:var(--bg3);
+}
+.col-panel-save-btn{
+  padding:7px 18px; border-radius:8px; font-size:12px; font-weight:700;
+  cursor:pointer; background:rgba(91,156,246,.8);
+  border:1px solid rgba(91,156,246,.9); color:#fff;
+  font-family:'Space Grotesk',sans-serif; transition:background .15s;
+}
+.col-panel-save-btn:hover{ background:rgba(91,156,246,1); }
+.col-panel-save-btn:active{ transform:translateY(1px); }
+.col-panel-reset-btn{
+  padding:7px 14px; border-radius:8px; font-size:12px; font-weight:600;
+  cursor:pointer; background:rgba(255,255,255,.04);
+  border:1px solid var(--border2); color:var(--text2);
+  font-family:'Space Grotesk',sans-serif; transition:background .15s;
+}
+.col-panel-reset-btn:hover{ background:rgba(255,255,255,.1); }
+.col-panel-toggle-btn{
+  padding:7px 14px; border-radius:8px; font-size:12px; font-weight:600;
+  cursor:pointer; background:rgba(255,255,255,.04);
+  border:1px solid var(--border2); color:var(--text2);
+  font-family:'Space Grotesk',sans-serif; transition:background .15s;
+}
+.col-panel-toggle-btn:hover{ background:rgba(255,255,255,.1); }
+.col-panel-status{
+  margin-left:auto; font-size:11px; color:var(--text3); font-style:italic;
+}
+body[data-theme="day"] .col-slider-val{ background:rgba(59,130,246,.1); }
+body[data-theme="day"] .col-slider-val.changed{ background:rgba(59,130,246,.25); }
+body[data-theme="day"] .cp-tabs{ background:rgba(230,236,245,.7); }
 .pager-bar{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; padding:12px 14px; border-top:1px solid var(--border); background:rgba(15,23,42,.55); border-radius:0 0 14px 14px;}
 .pager-info{font-size:12px; color:var(--text2); font-weight:600;}
 .pager-actions{display:flex; align-items:center; gap:6px; flex-wrap:wrap;}
@@ -1593,42 +1791,89 @@ body[data-theme="day"] .pager-bar{background:rgba(248,250,252,.9); border-top-co
 
 
 
-/* Son tablo genişlik düzeltmesi: 4. sütun taşmasını önler */
+/* Sütun taşma düzeltmesi: 4. ve 6. sütun içerik taşmasını önler */
 .bom-table{
-  min-width:1450px;
+  min-width:1065px;
   table-layout:fixed;
 }
-.bom-table col.col-name{width:440px !important;}
-.bom-table col.col-abc{width:110px !important;}
-.bom-table col.col-desc{width:310px !important;}
-.bom-table col.col-miktar{width:120px !important;}
 .bom-table td.td-name{
-  white-space:normal !important;
-  overflow:visible !important;
-  text-overflow:clip !important;
-  word-break:normal !important;
-  overflow-wrap:anywhere !important;
-  line-height:1.35 !important;
-  max-width:none !important;
+  white-space:nowrap !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+  max-width:0 !important;
+}
+.bom-table td.td-desc{
+  white-space:nowrap !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+  max-width:0 !important;
 }
 .bom-table td.td-abc{
   text-align:left !important;
-  padding-left:18px !important;
 }
-#stickyHead .bom-table,
-#stickyHead table{
-  min-width:1450px;
-  table-layout:fixed;
+
+
+/* SABIT SUTUN AYARLARI - Kullanici istegine gore */
+.bom-table{
+  width:2059px !important;
+  min-width:2059px !important;
+  table-layout:fixed !important;
 }
-#stickyHead th:nth-child(4){
-  min-width:440px !important;
+.bom-table col.col-kademe{width:60px !important;}
+.bom-table col.col-bno{width:80px !important;}
+.bom-table col.col-rev{width:40px !important;}
+.bom-table col.col-name{width:280px !important;}
+.bom-table col.col-abc{width:42px !important;}
+.bom-table col.col-desc{width:205px !important;}
+.bom-table col.col-miktar{width:57px !important;}
+.bom-table col.col-yeni{width:92px !important;}
+.bom-table th:nth-child(1), .bom-table td.td-kademe{text-align:left !important;}
+.bom-table th:nth-child(2), .bom-table td.td-bno{text-align:left !important;}
+.bom-table th:nth-child(3), .bom-table td.td-rev{text-align:center !important;}
+.bom-table th:nth-child(4), .bom-table td.td-name{text-align:left !important;}
+.bom-table th:nth-child(5), .bom-table td.td-abc{text-align:center !important;}
+.bom-table th:nth-child(6), .bom-table td.td-desc{text-align:center !important;}
+.bom-table th:nth-child(7), .bom-table td.td-miktar{text-align:left !important;}
+.bom-table th:nth-child(8), .bom-table td.td-yeni{text-align:left !important;}
+#stickyHead th:nth-child(1){text-align:left !important;}
+#stickyHead th:nth-child(2){text-align:left !important;}
+#stickyHead th:nth-child(3){text-align:center !important;}
+#stickyHead th:nth-child(4){text-align:left !important;}
+#stickyHead th:nth-child(5){text-align:center !important;}
+#stickyHead th:nth-child(6){text-align:center !important;}
+#stickyHead th:nth-child(7){text-align:left !important;}
+#stickyHead th:nth-child(8){text-align:left !important;}
+
+
+
+/* Sütun genişliği özelliği kaldırıldı */
+#colWidthToggleBtn,
+#colWidthPanel {
+  display: none !important;
 }
-#stickyHead th:nth-child(5){
-  min-width:110px !important;
-}
+
+/* İndirilen raporda da başlık sabitleme */
+#stickyHead{position:fixed;left:0;right:auto;top:100px;z-index:95;overflow:hidden;display:none;background:var(--bg3);border-bottom:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,.3);} 
+#stickyHead table{border-collapse:collapse;table-layout:fixed;min-width:2059px;width:2059px;}
+#stickyHead th{background:var(--bg3);color:var(--text3);font-size:11.5px;font-weight:800;letter-spacing:.025em;padding:12px 14px;white-space:normal;word-break:break-word;line-height:1.2;vertical-align:middle;}
+
 </style>
 
-<style>.upload-btn,.save-btn{display:none!important}</style>
+<style id="col-settings-export">.bom-table col.col-kademe { width: 60px !important; }
+.bom-table col.col-bno { width: 80px !important; }
+.bom-table col.col-rev { width: 40px !important; }
+.bom-table col.col-name { width: 280px !important; }
+.bom-table col.col-abc { width: 42px !important; }
+.bom-table col.col-desc { width: 205px !important; }
+.bom-table col.col-miktar { width: 57px !important; }
+.bom-table col.col-yeni { width: 92px !important; }
+.bom-table td.td-rev { text-align: center !important; }
+.bom-table td.td-abc { text-align: center !important; }
+.bom-table td.td-desc { text-align: center !important; }
+.bom-table { width: 2059px !important; min-width: 2059px !important; table-layout: fixed !important; }
+</style>
+
+<style>.upload-btn,.save-btn,.clear-data-btn,#colWidthToggleBtn,#colWidthPanel{display:none!important}</style>
 </head>
 <body data-theme="night">
 <div id="stickyHead"></div>
@@ -1640,8 +1885,10 @@ body[data-theme="day"] .pager-bar{background:rgba(248,250,252,.9); border-top-co
     <div class="file-action-panel" aria-label="Excel islemleri">
       <input type="file" id="excelFileInput" class="file-input-hidden" accept=".xlsx,.xls">
       <label for="excelFileInput" class="upload-btn" id="uploadBtn"><span class="upload-btn-text">Excel Yükle</span></label>
+      <button type="button" class="clear-data-btn" id="clearDataBtnEl" onclick="resetReportData()" style="display: inline-flex;" title="Yüklenen Excel verilerini temizle">Veri Sil</button>
       <button class="save-btn" id="saveBtnEl" onclick="saveReport()" style="display: inline-flex;">Raporu Kaydet</button>
-      <span class="upload-date-pill" id="uploadDatePill" style="display: flex;">25.06.2026  11:41</span>
+      <button class="col-panel-toggle-btn" id="colWidthToggleBtn" onclick="toggleColPanel()" style="display: none;" title="Sütun genişliklerini ayarla">⇔ Sütunlar</button>
+      <span class="upload-date-pill" id="uploadDatePill" style="display: flex;">25.06.2026  16:28</span>
       <button type="button" id="theme-toggle-btn" class="theme-toggle-btn" aria-label="Gündüz moduna geç" title="Gündüz moduna geç" data-theme-bound="1">
         <span class="theme-icon">☾</span>
       </button>
@@ -1686,7 +1933,46 @@ body[data-theme="day"] .pager-bar{background:rgba(248,250,252,.9); border-top-co
     <div class="search-count" id="searchCount">7.565 satır</div>
   </div>
 </div>
-<div class="pane-loading" id="paneLoading"><div class="pane-loading-spinner"></div><div class="pane-loading-text">Yükleniyor</div><div class="pane-loading-sub" id="paneLoadingName"></div></div>
+<!-- SÜTUN GENİŞLİK PANELİ -->
+<div id="colWidthPanel">
+  <div class="cp-tabs">
+    <button class="cp-tab active" data-tab="widths" onclick="cpSwitchTab(this.dataset.tab,this)">⇔ Sütun Genişlikleri</button>
+    <button class="cp-tab" data-tab="align" onclick="cpSwitchTab(this.dataset.tab,this)">≡ Hizalama</button>
+    <button class="cp-tab" data-tab="tblwidth" onclick="cpSwitchTab(this.dataset.tab,this)">↔ Tablo Genişliği</button>
+  </div>
+  <!-- Sütun Genişlikleri -->
+  <div class="cp-pane active" id="cp-widths">
+    <div class="col-panel-hint">Kaydırdıkça anlık yansır · diğer sütunlar etkilenmez · tüm tablolara uygulanır</div>
+    <div class="col-sliders" id="colSliders"></div>
+  </div>
+  <!-- Hizalama -->
+  <div class="cp-pane" id="cp-align">
+    <div class="col-panel-hint">Her sütun için veri hizalamasını seçin · tüm tablolara uygulanır</div>
+    <div class="col-sliders" id="colAligns"></div>
+  </div>
+  <!-- Tablo Genişliği -->
+  <div class="cp-pane" id="cp-tblwidth">
+    <div class="col-panel-hint">Tablonun ekrandaki yayılımını belirleyin</div>
+    <div class="tbl-width-row">
+      <div class="tbl-width-presets" id="tblWidthPresets"></div>
+      <div class="col-slider-top" style="margin-top:8px;">
+        <span class="col-slider-label">Özel genişlik</span>
+        <span class="col-slider-val" id="tblWidthVal">auto</span>
+      </div>
+      <div class="col-slider-wrap">
+        <div class="col-slider-track"><div class="col-slider-fill" id="tblWidthFill"></div></div>
+        <input type="range" class="col-slider-input" id="tblWidthSlider" min="600" max="3000" step="20" value="1065" oninput="cpTblWidthSlide(this.value)">
+      </div>
+      <div class="col-slider-minmax"><span>600px</span><span>3000px</span></div>
+    </div>
+  </div>
+  <div class="col-panel-actions">
+    <button class="col-panel-save-btn" onclick="applyColWidths()">✓ Uygula &amp; Kaydet</button>
+    <button class="col-panel-reset-btn" onclick="resetColWidths()">↺ Sıfırla</button>
+    <button class="col-panel-toggle-btn" onclick="toggleColPanel()">Kapat</button>
+    <span class="col-panel-status" id="colPanelStatus"></span>
+  </div>
+</div><div class="pane-loading" id="paneLoading"><div class="pane-loading-spinner"></div><div class="pane-loading-text">Yükleniyor</div><div class="pane-loading-sub" id="paneLoadingName"></div></div>
 <div class="content" id="mainContent"><div id="tabsContent"><div class="tab-pane" id="tab_12m_fuar_ebus___25_06_2026" style="display:none"></div><div class="tab-pane" id="tab_18m_ebus__nser____25_06_2026" style="display:none"></div><div class="tab-pane" id="tab_antalya_tramvay___25_06_2026" style="display:none"></div><div class="tab-pane" id="tab_belgrad100_tramvay___25_06_2026" style="display:none"></div><div class="tab-pane" id="tab_belgrad25_tramvay___25_06_2026" style="display:none"></div><div class="tab-pane" id="tab_bursa_tramvay___25_06_2026" style="display:none"></div><div class="tab-pane" id="tab_elblag_tramvay___25_06_2026" style="display:none"></div><div class="tab-pane" id="tab_gebze_darica_metro___25_06_2026" style="display:none"></div><div class="tab-pane" id="tab_iasi_16_tramvay___25_06_2026" style="display:none"></div><div class="tab-pane" id="tab_iasi_18_tramvay___25_06_2026" style="display:none"></div><div class="tab-pane" id="tab_izmir_aliosbi_12m_ebus___25_06_" style="display:none"></div><div class="tab-pane" id="tab_kayser__5_tramvay___25_06_2026" style="display:none"></div><div class="tab-pane" id="tab_kayser__6_tramvay___25_06_2026" style="display:none"></div><div class="tab-pane" id="tab_kocael__tramvay___25_06_2026" style="display:none"></div><div class="tab-pane" id="tab_kocael__5_tramvay___25_06_2026" style="display:none"></div><div class="tab-pane" id="tab_napol__tramvay___25_06_2026" style="display:none"></div><div class="tab-pane" id="tab_onseri_trolleybus___25_06_2026" style="display:none"></div><div class="tab-pane" id="tab_prag_trolleybus___25_06_2026" style="display:none"></div><div class="tab-pane" id="tab_samsun_tramvay___25_06_2026" style="display:none"></div><div class="tab-pane" id="tab_samsun_2_tramvay___25_06_2026" style="display:none"></div><div class="tab-pane" id="tab_siemens_orl_mc___25_06_2026" style="display:none"></div><div class="tab-pane" id="tab_siemens_orl_t___25_06_2026" style="display:none"></div><div class="tab-pane" id="tab_solarmove___25_06_2026" style="display:none"></div><div class="tab-pane" id="tab_suntrans___25_06_2026" style="display:none"></div><div class="tab-pane" id="tab_tim10_tramvay___25_06_2026" style="display:none"></div><div class="tab-pane" id="tab_tim17_tramvay___25_06_2026" style="display:none"></div><div class="tab-pane" id="tab_tim23_tramvay___25_06_2026" style="display:none"></div><div class="tab-pane" id="tab_timisoara_12m_trolleybus___25_0" style="display:none"></div><div class="tab-pane" id="tab_timisoara_18m_trolleybus___25_0" style="display:none"></div><div class="tab-pane" id="tab__stanbul_metro___25_06_2026" style="display:none"></div></div></div>
 
 <script>
@@ -1754,23 +2040,130 @@ function _thClassByHeader(h){
   if(hh==='yeni kademe'||hh.indexOf('yeni')===0) return 'th-yeni';
   return 'th-miktar th-center';
 }
+
+// ── TABLO AYAR PANELİ (kayıtlı rapor) ──
+var _colCfg=[
+  {cls:'col-kademe',td:'td-kademe',label:'Kademe',min:40,max:200,step:2},
+  {cls:'col-bno',td:'td-bno',label:'Bileşen No',min:80,max:300,step:2},
+  {cls:'col-rev',td:'td-rev',label:'Revizyon',min:30,max:120,step:2},
+  {cls:'col-name',td:'td-name',label:'Nesne Kısa Metni',min:100,max:800,step:5},
+  {cls:'col-abc',td:'td-abc',label:'ABC Göstergesi',min:30,max:150,step:2},
+  {cls:'col-desc',td:'td-desc',label:'Description',min:60,max:400,step:5},
+  {cls:'col-miktar',td:'td-miktar',label:'Miktar',min:30,max:150,step:2},
+  {cls:'col-yeni',td:'td-yeni',label:'Yeni Kademe',min:50,max:250,step:2}
+];
+var _sW={},_sDef={},_sAl={},_sTblW='auto';
+function _sRdW(cls){var ex=document.getElementById('col-settings-export');if(ex){var m=new RegExp('\.bom-table col\.'+cls+'\s*\{\s*width:\s*(\d+)px').exec(ex.textContent);if(m)return parseInt(m[1],10);}var els=document.querySelectorAll('style');for(var i=0;i<els.length;i++){var m=new RegExp('\.bom-table col\.'+cls+'\{width:(\d+)px').exec(els[i].textContent);if(!m)m=new RegExp('\.bom-table\s+col\.'+cls+'\s*\{[^}]*width:\s*(\d+)px','i').exec(els[i].textContent);if(m)return parseInt(m[1],10);}return 100;}
+function _sWrW(cls,px){var els=document.querySelectorAll('style');for(var i=0;i<els.length;i++){var t=els[i].textContent,ch=false;var nt=t.replace(new RegExp('(\.bom-table col\.'+cls+'\{width:)\d+px','g'),function(_,p){ch=true;return p+px+'px';});nt=nt.replace(new RegExp('(\.bom-table\s+col\.'+cls+'\s*\{[^}]*width:\s*)\d+px','gi'),function(_,p){ch=true;return p+px+'px';});if(ch)els[i].textContent=nt;}}
+function _sDom(cls,px){document.querySelectorAll('col.'+cls).forEach(function(e){e.style.width=px+'px';});}
+function _sApplyAl(td,al){var id='align-style-'+td;var el=document.getElementById(id);if(!el){el=document.createElement('style');el.id=id;document.head.appendChild(el);}el.textContent='.bom-table td.'+td+'{text-align:'+al+' !important;}';document.querySelectorAll('td.'+td).forEach(function(c){c.style.textAlign=al;});}
+function _sWrAl(td,al){_sApplyAl(td,al);}
+function _sRdAl(td){var ex=document.getElementById('col-settings-export');if(ex){var m=new RegExp('\.bom-table td\.'+td+'\s*\{\s*text-align:\s*(\w+)').exec(ex.textContent);if(m)return m[1];}var els=document.querySelectorAll('style');for(var i=els.length-1;i>=0;i--){var m=new RegExp('\.bom-table td\.'+td+'\s*\{[^}]*text-align:\s*(\w+)','i').exec(els[i].textContent);if(m)return m[1];}return 'left';}
+function _sApplyTbl(v){document.querySelectorAll('.bom-table').forEach(function(t){t.style.width=v;t.style.minWidth=(v==='auto'||v==='100%')?'':v;});_sTblW=v;}
+function _sFill(sl){var f=sl.parentNode.querySelector('.col-slider-fill');if(!f)return;f.style.width=((parseInt(sl.value)-parseInt(sl.min))/(parseInt(sl.max)-parseInt(sl.min))*100)+'%';}
+function cpSwitchTab(id,btn){document.querySelectorAll('.cp-tab').forEach(function(b){b.classList.remove('active');});document.querySelectorAll('.cp-pane').forEach(function(p){p.classList.remove('active');});if(btn)btn.classList.add('active');var p=document.getElementById('cp-'+id);if(p)p.classList.add('active');}
+function cpTblWidthSlide(v){var val=document.getElementById('tblWidthVal');if(val)val.textContent=v+'px';var sl=document.getElementById('tblWidthSlider');var fill=document.getElementById('tblWidthFill');if(sl&&fill)fill.style.width=((parseInt(v)-600)/(3000-600)*100)+'%';document.querySelectorAll('.tbl-width-preset').forEach(function(b){b.classList.remove('active');});_sTblW=v+'px';_sApplyTbl(v+'px');}
+function initColWidthPanel(){
+  var cW=document.getElementById('colSliders');
+  if(cW&&!cW.dataset.initialized){
+    cW.dataset.initialized='1';cW.innerHTML='';
+    _colCfg.forEach(function(col){
+      if(!_sW[col.cls]){_sW[col.cls]=_sRdW(col.cls);_sDef[col.cls]=_sW[col.cls];}
+      var cur=_sW[col.cls];
+      var row=document.createElement('div');row.className='col-slider-row';
+      var top=document.createElement('div');top.className='col-slider-top';
+      var lbl=document.createElement('span');lbl.className='col-slider-label';lbl.textContent=col.label;lbl.title=col.label;
+      var badge=document.createElement('span');badge.className='col-slider-val';badge.id='colval-'+col.cls;badge.textContent=cur+'px';
+      top.appendChild(lbl);top.appendChild(badge);
+      var wrap=document.createElement('div');wrap.className='col-slider-wrap';
+      var track=document.createElement('div');track.className='col-slider-track';
+      var fill=document.createElement('div');fill.className='col-slider-fill';fill.style.width=((cur-col.min)/(col.max-col.min)*100)+'%';track.appendChild(fill);
+      var sl=document.createElement('input');sl.type='range';sl.className='col-slider-input';sl.dataset.cls=col.cls;sl.min=col.min;sl.max=col.max;sl.step=col.step;sl.value=cur;
+      sl.addEventListener('input',function(){var v=parseInt(this.value,10);var b=document.getElementById('colval-'+this.dataset.cls);if(b){b.textContent=v+'px';b.classList.add('changed');}_sFill(this);_sDom(this.dataset.cls,v);_sW[this.dataset.cls]=v;var st=document.getElementById('colPanelStatus');if(st)st.textContent='Kaydedilmedi';});
+      wrap.appendChild(track);wrap.appendChild(sl);
+      var mm=document.createElement('div');mm.className='col-slider-minmax';var s1=document.createElement('span');s1.textContent=col.min+'px';var s2=document.createElement('span');s2.textContent=col.max+'px';mm.appendChild(s1);mm.appendChild(s2);
+      row.appendChild(top);row.appendChild(wrap);row.appendChild(mm);cW.appendChild(row);
+    });
+  }
+  var cA=document.getElementById('colAligns');
+  if(cA&&!cA.dataset.initialized){
+    cA.dataset.initialized='1';cA.innerHTML='';
+    _colCfg.forEach(function(col){
+      if(!_sAl[col.td])_sAl[col.td]=_sRdAl(col.td);
+      var cur=_sAl[col.td];
+      var row=document.createElement('div');row.className='col-slider-row';
+      var top=document.createElement('div');top.className='col-slider-top';
+      var lbl=document.createElement('span');lbl.className='col-slider-label';lbl.textContent=col.label;
+      var btns=document.createElement('div');btns.className='col-align-btns';
+      ['left','center','right'].forEach(function(align){
+        var labels={left:'←',center:'↔',right:'→'};
+        var titles={left:'Sola Yasla',center:'Ortala',right:'Sağa Yasla'};
+        var b=document.createElement('button');b.className='col-align-btn'+(cur===align?' active':'');
+        b.textContent=labels[align];b.title=titles[align];b.dataset.td=col.td;b.dataset.align=align;
+        b.addEventListener('click',function(){
+          var td=this.dataset.td,al=this.dataset.align;_sAl[td]=al;_sApplyAl(td,al);
+          btns.querySelectorAll('.col-align-btn').forEach(function(x){x.classList.remove('active');});
+          this.classList.add('active');var st=document.getElementById('colPanelStatus');if(st)st.textContent='Kaydedilmedi';
+        });
+        btns.appendChild(b);
+      });
+      top.appendChild(lbl);top.appendChild(btns);row.appendChild(top);cA.appendChild(row);
+    });
+  }
+  var presets=document.getElementById('tblWidthPresets');
+  if(presets&&!presets.dataset.initialized){
+    presets.dataset.initialized='1';
+    [{label:'Otomatik',val:'auto'},{label:'%100 Ekran',val:'100%'},{label:'1200px',val:'1200px'},{label:'1600px',val:'1600px'},{label:'2000px',val:'2000px'}].forEach(function(p){
+      var b=document.createElement('button');b.className='tbl-width-preset'+(_sTblW===p.val?' active':'');b.textContent=p.label;b.dataset.val=p.val;
+      b.addEventListener('click',function(){
+        var v=this.dataset.val;document.querySelectorAll('.tbl-width-preset').forEach(function(x){x.classList.remove('active');});this.classList.add('active');
+        var valEl=document.getElementById('tblWidthVal');if(valEl)valEl.textContent=v;
+        if(v!=='auto'&&v!=='100%'){var px=parseInt(v);var sl=document.getElementById('tblWidthSlider');if(sl)sl.value=px;var fill=document.getElementById('tblWidthFill');if(fill)fill.style.width=((px-600)/(3000-600)*100)+'%';}
+        _sTblW=v;_sApplyTbl(v);var st=document.getElementById('colPanelStatus');if(st)st.textContent='Kaydedilmedi';
+      });presets.appendChild(b);
+    });
+    var sl=document.getElementById('tblWidthSlider');if(sl){sl.value=1065;var fill=document.getElementById('tblWidthFill');if(fill)fill.style.width=((1065-600)/(3000-600)*100)+'%';}
+    var valEl=document.getElementById('tblWidthVal');if(valEl)valEl.textContent='auto';
+  }
+}
+function applyColWidths(){
+  _colCfg.forEach(function(col){var px=_sW[col.cls];if(px){_sWrW(col.cls,px);_sDom(col.cls,px);}});
+  _colCfg.forEach(function(col){var al=_sAl[col.td];if(al)_sWrAl(col.td,al);});
+  if(_sTblW)_sApplyTbl(_sTblW);
+  var st=document.getElementById('colPanelStatus');if(st){st.textContent='✓ Kaydedildi';setTimeout(function(){st.textContent='';},2500);}
+  document.querySelectorAll('.col-slider-val.changed').forEach(function(b){b.classList.remove('changed');});
+  var p=document.getElementById('colWidthPanel');if(p)p.classList.remove('visible');
+}
+function resetColWidths(){
+  _colCfg.forEach(function(col){var def=_sDef[col.cls]||_sRdW(col.cls);_sW[col.cls]=def;_sDom(col.cls,def);var sl=document.querySelector('.col-slider-input[data-cls="'+col.cls+'"]');if(sl){sl.value=def;_sFill(sl);}var b=document.getElementById('colval-'+col.cls);if(b){b.textContent=def+'px';b.classList.remove('changed');}});
+  _colCfg.forEach(function(col){_sAl[col.td]='left';_sApplyAl(col.td,'left');document.querySelectorAll('.col-align-btn[data-td="'+col.td+'"]').forEach(function(b){b.classList.toggle('active',b.dataset.align==='left');});});
+  _sTblW='auto';_sApplyTbl('auto');document.querySelectorAll('.tbl-width-preset').forEach(function(b){b.classList.toggle('active',b.dataset.val==='auto');});var ve=document.getElementById('tblWidthVal');if(ve)ve.textContent='auto';
+  var st=document.getElementById('colPanelStatus');if(st)st.textContent='Sıfırlandı — kaydet butonuna basın';
+}
+function toggleColPanel(){
+  var p=document.getElementById('colWidthPanel');if(!p)return;
+  if(p.classList.contains('visible')){p.classList.remove('visible');}
+  else{_colCfg.forEach(function(col){if(!_sW[col.cls])_sW[col.cls]=_sRdW(col.cls);var cur=_sW[col.cls];var sl=document.querySelector('.col-slider-input[data-cls="'+col.cls+'"]');if(sl){sl.value=cur;_sFill(sl);}var b=document.getElementById('colval-'+col.cls);if(b)b.textContent=cur+'px';});var st=document.getElementById('colPanelStatus');if(st)st.textContent='';p.classList.add('visible');}
+}
 function _wrapHdr(text){
-  if (/^revizyons+d[üu]zeyi$/i.test(String(text||'').trim())) return _esc(text);
-  // 16 karakter üstü kelimelerde wrap noktası ekle
-  var s=_esc(text); if(s.length<=16) return s;
-  var words=text.split(/s+/); if(words.length<2) return s;
-  var mid=Math.ceil(words.length/2);
-  return _esc(words.slice(0,mid).join(' '))+'<br>'+_esc(words.slice(mid).join(' '));
+  // Kayıtlı raporda da başlık isimleri aynen korunur; elle <br> eklenmez.
+  return _esc(String(text||''));
 }
 var _lazyState = Object.create(null);
+var _FIXED_COL_CLASSES = ['col-kademe','col-bno','col-rev','col-name','col-abc','col-desc','col-miktar','col-yeni'];
+var _FIXED_TD_CLASSES  = ['td-kademe','td-bno','td-rev td-center','td-name','td-abc td-center','td-desc','td-miktar','td-yeni'];
+var _FIXED_TH_CLASSES  = ['th-kademe','th-bno','th-rev th-center','th-name','th-abc th-center','th-desc th-center','th-miktar th-center','th-yeni'];
+var _FIXED_COL_WIDTHS  = [60,80,40,280,42,205,57,92];
 function _savedRowHtml(row, headers, hb, hn, hd, qb, qn, qd){
   var cells = row[4] || [];
   var h = '<tr class="'+_esc(row[0]||'')+'" data-bno="'+_esc(row[1]||'')+'" data-name="'+_esc(row[2]||'')+'" data-wbs="'+_esc(row[3]||'')+'">';
   for (var c=0;c<cells.length;c++) {
-    var tdCls = _tdClassByHeader(headers[c]);
+    var tdCls = _FIXED_TD_CLASSES[c] || _tdClassByHeader(headers[c]);
     var val = cells[c] || '';
     var cellHtml = (c===1 && hb) ? _hl(val, qb) : ((c===3 && hn) ? _hl(val, qn) : ((c===5 && hd) ? _hl(val, qd) : _esc(val)));
-    h += '<td'+(tdCls?' class="'+tdCls+'"':'')+'>'+cellHtml+'</td>';
+    var _fixedAlign = ['left','left','center','left','center','center','left','left'];
+    var _aStyle = ' style="text-align:'+(_fixedAlign[c]||'left')+'"';
+    h += '<td'+(tdCls?' class="'+tdCls+'"':'')+_aStyle+'>'+cellHtml+'</td>';
   }
   h += '</tr>';
   return h;
@@ -1782,9 +2175,13 @@ function _buildTbl(tabId){
   _lazyState[tabId] = { page:1, pageSize:100, total:rows.length, filtered:false, filteredIndexes:null, matchIndexes:null, lastBno:'', lastName:'', lastDesc:'', rawBno:'', rawName:'', rawDesc:'' };
   var h = '<div class="pane-header"><div><div class="pane-title">'+_esc(title)+'</div><div class="pane-subtitle">'+_esc(subtitle)+'</div></div><div class="pane-badge">📦 '+rows.length.toLocaleString('tr-TR')+' bileşen</div></div>';
   h += '<div class="table-wrap"><div class="table-scroll" data-tab="'+_esc(tabId)+'"><table class="bom-table" id="tbl_'+_esc(tabId)+'"><colgroup>';
-  for (var cg=0;cg<headers.length;cg++) { var cc=_colClassByHeader(headers[cg]); h += '<col'+(cc?' class="'+cc+'"':'')+'>'; }
+  for (var cg=0;cg<headers.length;cg++) {
+    var cc = _FIXED_COL_CLASSES[cg] || _colClassByHeader(headers[cg]);
+    var ww = _FIXED_COL_WIDTHS[cg] || '';
+    h += '<col'+(cc?' class="'+cc+'"':'')+(ww?' style="width:'+ww+'px"':'')+'>';
+  }
   h += '</colgroup><thead><tr>';
-  for (var a=0;a<headers.length;a++) { var cls=_thClassByHeader(headers[a]); h += '<th'+(cls?' class="'+cls+'"':'')+'>'+_wrapHdr(headers[a])+'</th>'; }
+  for (var a=0;a<headers.length;a++) { var cls=_FIXED_TH_CLASSES[a] || _thClassByHeader(headers[a]); h += '<th'+(cls?' class="'+cls+'"':'')+'>'+_wrapHdr(headers[a])+'</th>'; }
   h += '</tr></thead><tbody></tbody></table></div><div class="pager-bar" id="pager_'+_esc(tabId)+'"><div class="pager-info"></div><div class="pager-actions"></div></div></div>';
   return h;
 }
@@ -1988,6 +2385,99 @@ function _initProjectSearch(){
   _updateProjectSearch();
 }
 
+
+
+// ── SAVED REPORT STICKY HEADER ─────────────────────────────
+var _savedStickyActive = false;
+var _savedStickyBound = false;
+function initStickyHead(){
+  var bar = document.getElementById('stickyHead');
+  if(!bar) return;
+  if(!_savedStickyBound){
+    window.addEventListener('scroll', onScroll, {passive:true});
+    window.addEventListener('resize', syncStickyWidths, {passive:true});
+    document.addEventListener('scroll', function(e){
+      var t=e.target;
+      if(t && t.classList && t.classList.contains('table-scroll')) syncStickyWidths();
+    }, true);
+    _savedStickyBound = true;
+  }
+}
+function onScroll(){
+  var pane = _currentPane;
+  if(!pane) return;
+  var tbl = pane.querySelector('.bom-table');
+  if(!tbl){ hideStickyHead(); return; }
+  var thead = tbl.querySelector('thead');
+  if(!thead){ hideStickyHead(); return; }
+  var header = document.querySelector('.site-header');
+  var headerH = header ? Math.round(header.getBoundingClientRect().height) : 100;
+  var r = thead.getBoundingClientRect();
+  var tblR = tbl.getBoundingClientRect();
+  if(r.bottom < headerH + 2 && tblR.bottom > headerH + 2){
+    if(!_savedStickyActive){ buildStickyHead(tbl); _savedStickyActive = true; }
+    syncStickyWidths();
+  } else {
+    hideStickyHead();
+  }
+}
+function normalizeHeaderAlignment(root){
+  root = root || document;
+  var ths = root.querySelectorAll('.bom-table thead th, #stickyHead th');
+  ths.forEach(function(th, i){
+    var align = (i===0 || i===1 || i===3 || i===6 || i===7) ? 'left' : 'center';
+    th.style.textAlign = align;
+  });
+}
+function buildStickyHead(tbl){
+  var bar = document.getElementById('stickyHead');
+  var thead = tbl.querySelector('thead');
+  var scroll = tbl.closest('.table-scroll');
+  if(!bar || !thead || !scroll) return;
+  var cloneTbl = document.createElement('table');
+  cloneTbl.className = 'bom-table';
+  cloneTbl.appendChild(thead.cloneNode(true));
+  bar.innerHTML = '';
+  bar.appendChild(cloneTbl);
+  normalizeHeaderAlignment(bar);
+  bar.style.top = (document.querySelector('.site-header') ? document.querySelector('.site-header').getBoundingClientRect().height : 100) + 'px';
+  bar.style.display = 'block';
+  syncStickyWidths();
+}
+function syncStickyWidths(){
+  var bar = document.getElementById('stickyHead');
+  if(!bar || bar.style.display === 'none') return;
+  var pane = _currentPane;
+  var tbl = pane ? pane.querySelector('.bom-table') : null;
+  var scroll = tbl ? tbl.closest('.table-scroll') : null;
+  if(!tbl || !scroll) return;
+  var realThs = tbl.querySelectorAll('thead th');
+  var cloneThs = bar.querySelectorAll('th');
+  realThs.forEach(function(th, i){
+    if(cloneThs[i]){
+      var w = th.getBoundingClientRect().width;
+      cloneThs[i].style.width = w + 'px';
+      cloneThs[i].style.minWidth = w + 'px';
+      cloneThs[i].style.maxWidth = w + 'px';
+    }
+  });
+  var scrollRect = scroll.getBoundingClientRect();
+  bar.style.left = scrollRect.left + 'px';
+  bar.style.width = scrollRect.width + 'px';
+  var cloneTbl = bar.querySelector('table');
+  if(cloneTbl){
+    var tw = tbl.getBoundingClientRect().width;
+    cloneTbl.style.width = tw + 'px';
+    cloneTbl.style.minWidth = tw + 'px';
+    cloneTbl.style.marginLeft = '-' + scroll.scrollLeft + 'px';
+  }
+}
+function hideStickyHead(){
+  var bar = document.getElementById('stickyHead');
+  if(bar) bar.style.display = 'none';
+  _savedStickyActive = false;
+}
+
 function _showSelect(){
   _currentPane = null;
   if (_activeBtn) { _activeBtn.classList.remove('active'); _activeBtn = null; }
@@ -2043,6 +2533,9 @@ window.st = function(tabId){
     if (di) di.value='';
     var rows = (_SD[tabId] && _SD[tabId][3]) ? _SD[tabId][3] : [];
     _count(tabId, rows.length, rows.length, false);
+    initStickyHead();
+    hideStickyHead();
+    requestAnimationFrame(function(){ onScroll(); });
     _hideLoading();
   }, 0);
 };
@@ -2142,6 +2635,31 @@ async function _boot(){
     if(cd) cd.onclick=function(){ if(di) di.value=''; _withLoading('Filtre temizleniyor…', run); if(di) di.focus(); };
     _initProjectSearch();
     _showSelect();
+    initStickyHead();
+    // Sütun genişlik panelini başlat ve butonu göster
+    setTimeout(function(){
+      // col-settings-export'taki ayarları DOM'a uygula
+      var ex=document.getElementById('col-settings-export');
+      if(ex){
+        var t=ex.textContent;
+        // Sütun genişlikleri
+        ['col-kademe','col-bno','col-rev','col-name','col-abc','col-desc','col-miktar','col-yeni'].forEach(function(cls){
+          var m=new RegExp('.bom-table col.'+cls+'s*{s*width:s*(d+)px').exec(t);
+          if(m) document.querySelectorAll('col.'+cls).forEach(function(e){e.style.width=m[1]+'px';});
+        });
+        // Hizalamalar
+        ['td-kademe','td-bno','td-rev','td-name','td-abc','td-desc','td-miktar','td-yeni'].forEach(function(td){
+          var m=new RegExp('.bom-table td.'+td+'s*{s*text-align:s*(w+)').exec(t);
+          if(m){var styleEl=document.getElementById('align-style-'+td);if(!styleEl){styleEl=document.createElement('style');styleEl.id='align-style-'+td;document.head.appendChild(styleEl);}styleEl.textContent='.bom-table td.'+td+'{text-align:'+m[1]+' !important;}';}
+        });
+        // Tablo genişliği
+        var mw=new RegExp('.bom-tables*{s*width:s*([^;!]+)').exec(t);
+        if(mw){ var v=mw[1].trim(); document.querySelectorAll('.bom-table').forEach(function(tbl){tbl.style.width=v;tbl.style.minWidth=(v==='auto'||v==='100%')?'':v;}); }
+      }
+      initColWidthPanel();
+      var cb=document.getElementById('colWidthToggleBtn');
+      if(cb) cb.style.display='none';
+    }, 100);
     // Son güvenlik: açılış paint'inden sonra da tüm active durumlarını temizle.
     requestAnimationFrame(function(){
       document.querySelectorAll('.tab-nav button.active').forEach(function(b){ b.classList.remove('active'); });
