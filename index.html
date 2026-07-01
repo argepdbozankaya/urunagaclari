@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr">
-<head>
+<html lang="tr"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
@@ -1846,11 +1845,23 @@ body[data-theme="day"] .pager-bar{background:rgba(248,250,252,.9); border-top-co
 
 
 
-/* Sütun genişliği özelliği kaldırıldı */
-#colWidthToggleBtn,
-#colWidthPanel {
-  display: none !important;
-}
+/* Tablo ayar paneli aktif: buton sadece veri yüklendiğinde JS ile gösterilir */
+#colWidthToggleBtn { display: none; }
+#colWidthPanel { display: none; }
+#colWidthPanel.visible { display: block; }
+
+
+
+/* Tablo ayar paneli - görünür ve kaydedilebilir sürüm */
+#colWidthToggleBtn.force-visible { display: inline-flex !important; }
+#colWidthPanel.visible { display:block !important; }
+#colWidthPanel .cp-tab.active{ color: var(--accent); border-bottom-color: var(--accent); }
+#colWidthPanel .col-slider-val{ color: var(--accent); }
+#colWidthPanel .col-slider-fill{ background: var(--accent); }
+#colWidthPanel .col-slider-input::-webkit-slider-thumb{ background: var(--accent); }
+#colWidthPanel .col-slider-input::-moz-range-thumb{ background: var(--accent); }
+#colWidthPanel .tbl-width-preset.active,
+#colWidthPanel .col-align-btn.active{ color: var(--accent); border-color: rgba(91,156,246,.55); background: rgba(91,156,246,.20); }
 
 /* İndirilen raporda da başlık sabitleme */
 #stickyHead{position:fixed;left:0;right:auto;top:100px;z-index:95;overflow:hidden;display:none;background:var(--bg3);border-bottom:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,.3);} 
@@ -1859,22 +1870,65 @@ body[data-theme="day"] .pager-bar{background:rgba(248,250,252,.9); border-top-co
 
 </style>
 
-<style id="col-settings-export">.bom-table col.col-kademe { width: 60px !important; }
-.bom-table col.col-bno { width: 80px !important; }
-.bom-table col.col-rev { width: 40px !important; }
-.bom-table col.col-name { width: 280px !important; }
-.bom-table col.col-abc { width: 42px !important; }
-.bom-table col.col-desc { width: 205px !important; }
-.bom-table col.col-miktar { width: 57px !important; }
+<style id="col-settings-export">.bom-table col.col-kademe { width: 114px !important; }
+.bom-table col.col-bno { width: 301px !important; }
+.bom-table col.col-rev { width: 123px !important; }
+.bom-table col.col-name { width: 379px !important; }
+.bom-table col.col-abc { width: 134px !important; }
+.bom-table col.col-desc { width: 115px !important; }
+.bom-table col.col-miktar { width: 676px !important; }
 .bom-table col.col-yeni { width: 92px !important; }
-.bom-table td.td-rev { text-align: center !important; }
-.bom-table td.td-abc { text-align: center !important; }
-.bom-table td.td-desc { text-align: center !important; }
-.bom-table { width: 2059px !important; min-width: 2059px !important; table-layout: fixed !important; }
+.bom-table th:nth-child(1), .bom-table td.td-kademe { text-align: left !important; }
+#stickyHead th:nth-child(1) { text-align: left !important; }
+.bom-table th:nth-child(2), .bom-table td.td-bno { text-align: left !important; }
+#stickyHead th:nth-child(2) { text-align: left !important; }
+.bom-table th:nth-child(3), .bom-table td.td-rev { text-align: center !important; }
+#stickyHead th:nth-child(3) { text-align: center !important; }
+.bom-table th:nth-child(4), .bom-table td.td-name { text-align: left !important; }
+#stickyHead th:nth-child(4) { text-align: left !important; }
+.bom-table th:nth-child(5), .bom-table td.td-abc { text-align: center !important; }
+#stickyHead th:nth-child(5) { text-align: center !important; }
+.bom-table th:nth-child(6), .bom-table td.td-desc { text-align: center !important; }
+#stickyHead th:nth-child(6) { text-align: center !important; }
+.bom-table th:nth-child(7), .bom-table td.td-miktar { text-align: left !important; }
+#stickyHead th:nth-child(7) { text-align: left !important; }
+.bom-table th:nth-child(8), .bom-table td.td-yeni { text-align: left !important; }
+#stickyHead th:nth-child(8) { text-align: left !important; }
+.bom-table { width: 1934px !important; min-width: 1934px !important; table-layout: fixed !important; }
+#stickyHead table { width: 1934px !important; min-width: 1934px !important; table-layout: fixed !important; }
+</style>
+<style id="excel-drag-resize-css">
+
+/* EXCEL MANTIGI SUTUN SURUKLEME */
+.bom-table thead th{position:sticky;top:0;}
+.bom-table th.col-resize-ready{position:relative;}
+.bom-table th .col-drag-handle{
+  position:absolute;top:0;right:-4px;width:8px;height:100%;
+  cursor:col-resize;z-index:20;user-select:none;touch-action:none;
+}
+.bom-table th .col-drag-handle::after{
+  content:'';position:absolute;top:18%;bottom:18%;left:3px;width:2px;
+  background:rgba(91,156,246,.28);border-radius:4px;opacity:.45;
+}
+.bom-table th .col-drag-handle:hover::after,
+.bom-table th.is-resizing .col-drag-handle::after{opacity:1;background:rgba(91,156,246,.9);}
+body.col-resizing{cursor:col-resize!important;user-select:none!important;}
+body.col-resizing *{cursor:col-resize!important;}
+.col-drag-hint{font-size:11px;color:var(--text3);padding:7px 20px;border-top:1px solid var(--border2);background:rgba(255,255,255,.025);}
+</style>
+<style id="excel-drag-current-style">.bom-table col.col-kademe{width:114px!important;}
+.bom-table col.col-bno{width:301px!important;}
+.bom-table col.col-rev{width:123px!important;}
+.bom-table col.col-name{width:379px!important;}
+.bom-table col.col-abc{width:134px!important;}
+.bom-table col.col-desc{width:115px!important;}
+.bom-table col.col-miktar{width:676px!important;}
+.bom-table col.col-yeni{width:92px!important;}
+.bom-table{width:1934px!important;min-width:1934px!important;table-layout:fixed!important;}
+#stickyHead table{width:1934px!important;min-width:1934px!important;table-layout:fixed!important;}
 </style>
 
-<style>.upload-btn,.save-btn,.clear-data-btn,#colWidthToggleBtn,#colWidthPanel{display:none!important}</style>
-</head>
+<style id="align-style-td-kademe">.bom-table td.td-kademe{text-align:left !important;}</style><style id="align-style-td-bno">.bom-table td.td-bno{text-align:left !important;}</style><style id="align-style-td-rev">.bom-table td.td-rev{text-align:center !important;}</style><style id="align-style-td-name">.bom-table td.td-name{text-align:left !important;}</style><style id="align-style-td-abc">.bom-table td.td-abc{text-align:center !important;}</style><style id="align-style-td-desc">.bom-table td.td-desc{text-align:center !important;}</style><style id="align-style-td-miktar">.bom-table td.td-miktar{text-align:left !important;}</style><style id="align-style-td-yeni">.bom-table td.td-yeni{text-align:left !important;}</style><style>.upload-btn,.save-btn,.clear-data-btn,#colWidthToggleBtn,#colWidthPanel,.col-drag-handle,.col-drag-hint{display:none!important}</style></head>
 <body data-theme="night">
 <div id="stickyHead"></div>
 <header class="site-header">
@@ -1884,18 +1938,17 @@ body[data-theme="day"] .pager-bar{background:rgba(248,250,252,.9); border-top-co
   <div class="header-actions">
     <div class="file-action-panel" aria-label="Excel islemleri">
       <input type="file" id="excelFileInput" class="file-input-hidden" accept=".xlsx,.xls">
-      <label for="excelFileInput" class="upload-btn" id="uploadBtn"><span class="upload-btn-text">Excel Yükle</span></label>
-      <button type="button" class="clear-data-btn" id="clearDataBtnEl" onclick="resetReportData()" style="display: inline-flex;" title="Yüklenen Excel verilerini temizle">Veri Sil</button>
-      <button class="save-btn" id="saveBtnEl" onclick="saveReport()" style="display: inline-flex;">Raporu Kaydet</button>
-      <button class="col-panel-toggle-btn" id="colWidthToggleBtn" onclick="toggleColPanel()" style="display: none;" title="Sütun genişliklerini ayarla">⇔ Sütunlar</button>
-      <span class="upload-date-pill" id="uploadDatePill" style="display: flex;">01.07.2026  08:58</span>
+      <label for="excelFileInput" class="upload-btn" id="uploadBtn" style="display: none;"><span class="upload-btn-text">Excel Yükle</span></label>
+      <button type="button" class="clear-data-btn" id="clearDataBtnEl" onclick="resetReportData()" style="display: none;" title="Yüklenen Excel verilerini temizle">Veri Sil</button>
+      <button class="save-btn" id="saveBtnEl" onclick="saveReport()" style="display: none;">Raporu Kaydet</button>
+      <span class="upload-date-pill" id="uploadDatePill" style="display: flex;">01.07.2026  11:01</span>
       <button type="button" id="theme-toggle-btn" class="theme-toggle-btn" aria-label="Gündüz moduna geç" title="Gündüz moduna geç" data-theme-bound="1">
         <span class="theme-icon">☾</span>
       </button>
     </div>
   </div>
 </header>
-<div class="tab-nav-wrapper visible" id="tabNavWrapper"><div class="project-filter-bar" aria-label="Proje arama"><div class="project-filter-inner"><span class="project-filter-label">PROJE ARA</span><div class="project-filter-input-wrap"><input type="text" class="project-filter-input" id="projectSearchInput" placeholder="Proje adı yazın..."><button type="button" class="project-filter-clear" id="projectSearchClear" aria-label="Proje aramasını temizle">×</button></div><span class="project-filter-count" id="projectSearchCount">0 proje</span></div></div><div class="project-filter-empty" id="projectSearchEmpty">Aramanızla eşleşen proje bulunamadı.</div><nav class="tab-nav" id="tabNav"><button type="button" data-tab="tab_12m_fuar_ebus___01_07_2026" data-full="12M FUAR EBUS" class=""><span class="tab-icon">🚌</span>12M FUAR EBUS</button><button type="button" data-tab="tab_18m_ebus__nser____01_07_2026" data-full="18M EBUS ÖNSERİ" class=""><span class="tab-icon">🚌</span>18M EBUS ÖNSERİ</button><button type="button" data-tab="tab_antalya_tramvay___01_07_2026" data-full="ANTALYA TRAMVAY" class=""><span class="tab-icon">🚊</span>ANTALYA TRAMVAY</button><button type="button" data-tab="tab_belgrad100_tramvay___01_07_2026" data-full="BELGRAD100 TRAMVAY" class=""><span class="tab-icon">🚊</span>BELGRAD100 TRAMVAY</button><button type="button" data-tab="tab_belgrad25_tramvay___01_07_2026" data-full="BELGRAD25 TRAMVAY" class=""><span class="tab-icon">🚊</span>BELGRAD25 TRAMVAY</button><button type="button" data-tab="tab_bursa_tramvay___01_07_2026" data-full="BURSA TRAMVAY" class=""><span class="tab-icon">🚊</span>BURSA TRAMVAY</button><button type="button" data-tab="tab_elblag_tramvay___01_07_2026" data-full="ELBLAG TRAMVAY" class=""><span class="tab-icon">🚊</span>ELBLAG TRAMVAY</button><button type="button" data-tab="tab_gebze_darica_metro___01_07_2026" data-full="GEBZE DARICA METRO" class=""><span class="tab-icon">🚇</span>GEBZE DARICA METRO</button><button type="button" data-tab="tab_iasi_16_tramvay___01_07_2026" data-full="IASI 16 TRAMVAY" class=""><span class="tab-icon">🚊</span>IASI 16 TRAMVAY</button><button type="button" data-tab="tab_iasi_18_tramvay___01_07_2026" data-full="IASI 18 TRAMVAY" class=""><span class="tab-icon">🚊</span>IASI 18 TRAMVAY</button><button type="button" data-tab="tab_izmir_aliosbi_12m_ebus___01_07_" data-full="IZMIR ALIOSBI 12M EBUS" class=""><span class="tab-icon">🚌</span>IZMIR ALIOSBI 12M EBUS</button><button type="button" data-tab="tab_kayser__5_tramvay___01_07_2026" data-full="KAYSERİ 5 TRAMVAY" class=""><span class="tab-icon">🚊</span>KAYSERİ 5 TRAMVAY</button><button type="button" data-tab="tab_kayser__6_tramvay___01_07_2026" data-full="KAYSERİ 6 TRAMVAY" class=""><span class="tab-icon">🚊</span>KAYSERİ 6 TRAMVAY</button><button type="button" data-tab="tab_kocael__tramvay___01_07_2026" data-full="KOCAELİ TRAMVAY" class=""><span class="tab-icon">🚊</span>KOCAELİ TRAMVAY</button><button type="button" data-tab="tab_kocael__5_tramvay___01_07_2026" data-full="KOCAELİ+5 TRAMVAY" class=""><span class="tab-icon">🚊</span>KOCAELİ+5 TRAMVAY</button><button type="button" data-tab="tab_napol__tramvay___01_07_2026" data-full="NAPOLİ TRAMVAY" class=""><span class="tab-icon">🚊</span>NAPOLİ TRAMVAY</button><button type="button" data-tab="tab_onseri_trolleybus___01_07_2026" data-full="ONSERI TROLLEYBUS" class=""><span class="tab-icon">🚎</span>ONSERI TROLLEYBUS</button><button type="button" data-tab="tab_prag_trolleybus___01_07_2026" data-full="PRAG TROLLEYBUS" class=""><span class="tab-icon">🚎</span>PRAG TROLLEYBUS</button><button type="button" data-tab="tab_samsun_tramvay___01_07_2026" data-full="SAMSUN TRAMVAY" class=""><span class="tab-icon">🚊</span>SAMSUN TRAMVAY</button><button type="button" data-tab="tab_samsun_2_tramvay___01_07_2026" data-full="SAMSUN+2 TRAMVAY" class=""><span class="tab-icon">🚊</span>SAMSUN+2 TRAMVAY</button><button type="button" data-tab="tab_siemens_orl_mc___01_07_2026" data-full="SIEMENS ORL MC" class=""><span class="tab-icon">⚡</span>SIEMENS ORL MC</button><button type="button" data-tab="tab_siemens_orl_t___01_07_2026" data-full="SIEMENS ORL T" class=""><span class="tab-icon">⚡</span>SIEMENS ORL T</button><button type="button" data-tab="tab_solarmove___01_07_2026" data-full="SOLARMOVE" class=""><span class="tab-icon">🚆</span>SOLARMOVE</button><button type="button" data-tab="tab_suntrans___01_07_2026" data-full="SUNTRANS" class=""><span class="tab-icon">🚆</span>SUNTRANS</button><button type="button" data-tab="tab_tim10_tramvay___01_07_2026" data-full="TIM10 TRAMVAY" class=""><span class="tab-icon">🚊</span>TIM10 TRAMVAY</button><button type="button" data-tab="tab_tim17_tramvay___01_07_2026" data-full="TIM17 TRAMVAY" class=""><span class="tab-icon">🚊</span>TIM17 TRAMVAY</button><button type="button" data-tab="tab_tim23_tramvay___01_07_2026" data-full="TIM23 TRAMVAY" class=""><span class="tab-icon">🚊</span>TIM23 TRAMVAY</button><button type="button" data-tab="tab_timisoara_12m_trolleybus___01_0" data-full="TIMISOARA 12M TROLLEYBUS" class=""><span class="tab-icon">🚎</span>TIMISOARA 12M TROLLEYBUS</button><button type="button" data-tab="tab_timisoara_18m_trolleybus___01_0" data-full="TIMISOARA 18M TROLLEYBUS" class=""><span class="tab-icon">🚎</span>TIMISOARA 18M TROLLEYBUS</button><button type="button" data-tab="tab__stanbul_metro___01_07_2026" data-full="İSTANBUL METRO" class=""><span class="tab-icon">🚇</span>İSTANBUL METRO</button></nav></div>
+<div class="tab-nav-wrapper visible" id="tabNavWrapper"><div class="project-filter-bar" aria-label="Proje arama"><div class="project-filter-inner"><span class="project-filter-label">PROJE ARA</span><div class="project-filter-input-wrap"><input type="text" class="project-filter-input" id="projectSearchInput" placeholder="Proje adı yazın..." data-bound="1"><button type="button" class="project-filter-clear" id="projectSearchClear" aria-label="Proje aramasını temizle" data-bound="1">×</button></div><span class="project-filter-count" id="projectSearchCount">30 proje</span></div></div><div class="project-filter-empty" id="projectSearchEmpty">Aramanızla eşleşen proje bulunamadı.</div><nav class="tab-nav" id="tabNav"><button type="button" data-tab="tab_12m_fuar_ebus___01_07_2026" data-full="12M FUAR EBUS" class=""><span class="tab-icon">🚌</span>12M FUAR EBUS</button><button type="button" data-tab="tab_18m_ebus__nser____01_07_2026" data-full="18M EBUS ÖNSERİ" class=""><span class="tab-icon">🚌</span>18M EBUS ÖNSERİ</button><button type="button" data-tab="tab_antalya_tramvay___01_07_2026" data-full="ANTALYA TRAMVAY" class=""><span class="tab-icon">🚊</span>ANTALYA TRAMVAY</button><button type="button" data-tab="tab_belgrad100_tramvay___01_07_2026" data-full="BELGRAD100 TRAMVAY" class=""><span class="tab-icon">🚊</span>BELGRAD100 TRAMVAY</button><button type="button" data-tab="tab_belgrad25_tramvay___01_07_2026" data-full="BELGRAD25 TRAMVAY" class=""><span class="tab-icon">🚊</span>BELGRAD25 TRAMVAY</button><button type="button" data-tab="tab_bursa_tramvay___01_07_2026" data-full="BURSA TRAMVAY" class=""><span class="tab-icon">🚊</span>BURSA TRAMVAY</button><button type="button" data-tab="tab_elblag_tramvay___01_07_2026" data-full="ELBLAG TRAMVAY" class=""><span class="tab-icon">🚊</span>ELBLAG TRAMVAY</button><button type="button" data-tab="tab_gebze_darica_metro___01_07_2026" data-full="GEBZE DARICA METRO" class=""><span class="tab-icon">🚇</span>GEBZE DARICA METRO</button><button type="button" data-tab="tab_iasi_16_tramvay___01_07_2026" data-full="IASI 16 TRAMVAY" class=""><span class="tab-icon">🚊</span>IASI 16 TRAMVAY</button><button type="button" data-tab="tab_iasi_18_tramvay___01_07_2026" data-full="IASI 18 TRAMVAY" class=""><span class="tab-icon">🚊</span>IASI 18 TRAMVAY</button><button type="button" data-tab="tab_izmir_aliosbi_12m_ebus___01_07_" data-full="IZMIR ALIOSBI 12M EBUS" class=""><span class="tab-icon">🚌</span>IZMIR ALIOSBI 12M EBUS</button><button type="button" data-tab="tab_kayser__5_tramvay___01_07_2026" data-full="KAYSERİ 5 TRAMVAY" class=""><span class="tab-icon">🚊</span>KAYSERİ 5 TRAMVAY</button><button type="button" data-tab="tab_kayser__6_tramvay___01_07_2026" data-full="KAYSERİ 6 TRAMVAY" class=""><span class="tab-icon">🚊</span>KAYSERİ 6 TRAMVAY</button><button type="button" data-tab="tab_kocael__tramvay___01_07_2026" data-full="KOCAELİ TRAMVAY" class=""><span class="tab-icon">🚊</span>KOCAELİ TRAMVAY</button><button type="button" data-tab="tab_kocael__5_tramvay___01_07_2026" data-full="KOCAELİ+5 TRAMVAY" class=""><span class="tab-icon">🚊</span>KOCAELİ+5 TRAMVAY</button><button type="button" data-tab="tab_napol__tramvay___01_07_2026" data-full="NAPOLİ TRAMVAY" class=""><span class="tab-icon">🚊</span>NAPOLİ TRAMVAY</button><button type="button" data-tab="tab_onseri_trolleybus___01_07_2026" data-full="ONSERI TROLLEYBUS" class=""><span class="tab-icon">🚎</span>ONSERI TROLLEYBUS</button><button type="button" data-tab="tab_prag_trolleybus___01_07_2026" data-full="PRAG TROLLEYBUS" class=""><span class="tab-icon">🚎</span>PRAG TROLLEYBUS</button><button type="button" data-tab="tab_samsun_tramvay___01_07_2026" data-full="SAMSUN TRAMVAY" class=""><span class="tab-icon">🚊</span>SAMSUN TRAMVAY</button><button type="button" data-tab="tab_samsun_2_tramvay___01_07_2026" data-full="SAMSUN+2 TRAMVAY" class=""><span class="tab-icon">🚊</span>SAMSUN+2 TRAMVAY</button><button type="button" data-tab="tab_siemens_orl_mc___01_07_2026" data-full="SIEMENS ORL MC" class=""><span class="tab-icon">⚡</span>SIEMENS ORL MC</button><button type="button" data-tab="tab_siemens_orl_t___01_07_2026" data-full="SIEMENS ORL T" class=""><span class="tab-icon">⚡</span>SIEMENS ORL T</button><button type="button" data-tab="tab_solarmove___01_07_2026" data-full="SOLARMOVE" class=""><span class="tab-icon">🚆</span>SOLARMOVE</button><button type="button" data-tab="tab_suntrans___01_07_2026" data-full="SUNTRANS" class=""><span class="tab-icon">🚆</span>SUNTRANS</button><button type="button" data-tab="tab_tim10_tramvay___01_07_2026" data-full="TIM10 TRAMVAY" class=""><span class="tab-icon">🚊</span>TIM10 TRAMVAY</button><button type="button" data-tab="tab_tim17_tramvay___01_07_2026" data-full="TIM17 TRAMVAY" class=""><span class="tab-icon">🚊</span>TIM17 TRAMVAY</button><button type="button" data-tab="tab_tim23_tramvay___01_07_2026" data-full="TIM23 TRAMVAY" class=""><span class="tab-icon">🚊</span>TIM23 TRAMVAY</button><button type="button" data-tab="tab_timisoara_12m_trolleybus___01_0" data-full="TIMISOARA 12M TROLLEYBUS" class=""><span class="tab-icon">🚎</span>TIMISOARA 12M TROLLEYBUS</button><button type="button" data-tab="tab_timisoara_18m_trolleybus___01_0" data-full="TIMISOARA 18M TROLLEYBUS" class=""><span class="tab-icon">🚎</span>TIMISOARA 18M TROLLEYBUS</button><button type="button" data-tab="tab__stanbul_metro___01_07_2026" data-full="İSTANBUL METRO" class=""><span class="tab-icon">🚇</span>İSTANBUL METRO</button></nav></div>
 <div class="search-bar-wrapper visible" id="searchBarWrapper">
   <div class="search-inner">
     <div class="search-field">
@@ -1930,11 +1983,11 @@ body[data-theme="day"] .pager-bar{background:rgba(248,250,252,.9); border-top-co
       </div>
     </div>
     <button class="search-go-btn" id="searchGoBtnDesc" title="Ara">🔍</button>
-    <div class="search-count" id="searchCount">12.747 satır</div>
+    <div class="search-count" id="searchCount"></div>
   </div>
 </div>
 <!-- SÜTUN GENİŞLİK PANELİ -->
-<div id="colWidthPanel">
+<div id="colWidthPanel" style="display: none;"><div class="col-drag-hint">Sutun basliklarinin sag kenarini surukleyerek Excel mantigi ile genislik ayari yapabilirsiniz.</div>
   <div class="cp-tabs">
     <button class="cp-tab active" data-tab="widths" onclick="cpSwitchTab(this.dataset.tab,this)">⇔ Sütun Genişlikleri</button>
     <button class="cp-tab" data-tab="align" onclick="cpSwitchTab(this.dataset.tab,this)">≡ Hizalama</button>
@@ -1943,24 +1996,24 @@ body[data-theme="day"] .pager-bar{background:rgba(248,250,252,.9); border-top-co
   <!-- Sütun Genişlikleri -->
   <div class="cp-pane active" id="cp-widths">
     <div class="col-panel-hint">Kaydırdıkça anlık yansır · diğer sütunlar etkilenmez · tüm tablolara uygulanır</div>
-    <div class="col-sliders" id="colSliders"></div>
+    <div class="col-sliders" id="colSliders" data-initialized="1"><div class="col-slider-row"><div class="col-slider-top"><span class="col-slider-label" title="Kademe">Kademe</span><span class="col-slider-val" id="colval-col-kademe">114px</span></div><div class="col-slider-wrap"><div class="col-slider-track"><div class="col-slider-fill" style="width: 46.25%;"></div></div><input type="range" class="col-slider-input" data-cls="col-kademe" min="40" max="200" step="2"></div><div class="col-slider-minmax"><span>40px</span><span>200px</span></div></div><div class="col-slider-row"><div class="col-slider-top"><span class="col-slider-label" title="Bileşen No">Bileşen No</span><span class="col-slider-val" id="colval-col-bno">301px</span></div><div class="col-slider-wrap"><div class="col-slider-track"><div class="col-slider-fill" style="width: 100.455%;"></div></div><input type="range" class="col-slider-input" data-cls="col-bno" min="80" max="300" step="2"></div><div class="col-slider-minmax"><span>80px</span><span>300px</span></div></div><div class="col-slider-row"><div class="col-slider-top"><span class="col-slider-label" title="Revizyon">Revizyon</span><span class="col-slider-val" id="colval-col-rev">123px</span></div><div class="col-slider-wrap"><div class="col-slider-track"><div class="col-slider-fill" style="width: 103.333%;"></div></div><input type="range" class="col-slider-input" data-cls="col-rev" min="30" max="120" step="2"></div><div class="col-slider-minmax"><span>30px</span><span>120px</span></div></div><div class="col-slider-row"><div class="col-slider-top"><span class="col-slider-label" title="Nesne Kısa Metni">Nesne Kısa Metni</span><span class="col-slider-val" id="colval-col-name">379px</span></div><div class="col-slider-wrap"><div class="col-slider-track"><div class="col-slider-fill" style="width: 39.8571%;"></div></div><input type="range" class="col-slider-input" data-cls="col-name" min="100" max="800" step="5"></div><div class="col-slider-minmax"><span>100px</span><span>800px</span></div></div><div class="col-slider-row"><div class="col-slider-top"><span class="col-slider-label" title="ABC Göstergesi">ABC Göstergesi</span><span class="col-slider-val" id="colval-col-abc">134px</span></div><div class="col-slider-wrap"><div class="col-slider-track"><div class="col-slider-fill" style="width: 86.6667%;"></div></div><input type="range" class="col-slider-input" data-cls="col-abc" min="30" max="150" step="2"></div><div class="col-slider-minmax"><span>30px</span><span>150px</span></div></div><div class="col-slider-row"><div class="col-slider-top"><span class="col-slider-label" title="Description">Description</span><span class="col-slider-val" id="colval-col-desc">115px</span></div><div class="col-slider-wrap"><div class="col-slider-track"><div class="col-slider-fill" style="width: 16.1765%;"></div></div><input type="range" class="col-slider-input" data-cls="col-desc" min="60" max="400" step="5"></div><div class="col-slider-minmax"><span>60px</span><span>400px</span></div></div><div class="col-slider-row"><div class="col-slider-top"><span class="col-slider-label" title="Miktar">Miktar</span><span class="col-slider-val" id="colval-col-miktar">676px</span></div><div class="col-slider-wrap"><div class="col-slider-track"><div class="col-slider-fill" style="width: 538.333%;"></div></div><input type="range" class="col-slider-input" data-cls="col-miktar" min="30" max="150" step="2"></div><div class="col-slider-minmax"><span>30px</span><span>150px</span></div></div><div class="col-slider-row"><div class="col-slider-top"><span class="col-slider-label" title="Yeni Kademe">Yeni Kademe</span><span class="col-slider-val" id="colval-col-yeni">92px</span></div><div class="col-slider-wrap"><div class="col-slider-track"><div class="col-slider-fill" style="width: 21%;"></div></div><input type="range" class="col-slider-input" data-cls="col-yeni" min="50" max="250" step="2"></div><div class="col-slider-minmax"><span>50px</span><span>250px</span></div></div></div>
   </div>
   <!-- Hizalama -->
   <div class="cp-pane" id="cp-align">
     <div class="col-panel-hint">Her sütun için veri hizalamasını seçin · tüm tablolara uygulanır</div>
-    <div class="col-sliders" id="colAligns"></div>
+    <div class="col-sliders" id="colAligns" data-initialized="1"><div class="col-slider-row"><div class="col-slider-top"><span class="col-slider-label">Kademe</span><div class="col-align-btns"><button class="col-align-btn active" title="Sola Yasla" data-td="td-kademe" data-align="left">←</button><button class="col-align-btn" title="Ortala" data-td="td-kademe" data-align="center">↔</button><button class="col-align-btn" title="Sağa Yasla" data-td="td-kademe" data-align="right">→</button></div></div></div><div class="col-slider-row"><div class="col-slider-top"><span class="col-slider-label">Bileşen No</span><div class="col-align-btns"><button class="col-align-btn active" title="Sola Yasla" data-td="td-bno" data-align="left">←</button><button class="col-align-btn" title="Ortala" data-td="td-bno" data-align="center">↔</button><button class="col-align-btn" title="Sağa Yasla" data-td="td-bno" data-align="right">→</button></div></div></div><div class="col-slider-row"><div class="col-slider-top"><span class="col-slider-label">Revizyon</span><div class="col-align-btns"><button class="col-align-btn" title="Sola Yasla" data-td="td-rev" data-align="left">←</button><button class="col-align-btn active" title="Ortala" data-td="td-rev" data-align="center">↔</button><button class="col-align-btn" title="Sağa Yasla" data-td="td-rev" data-align="right">→</button></div></div></div><div class="col-slider-row"><div class="col-slider-top"><span class="col-slider-label">Nesne Kısa Metni</span><div class="col-align-btns"><button class="col-align-btn active" title="Sola Yasla" data-td="td-name" data-align="left">←</button><button class="col-align-btn" title="Ortala" data-td="td-name" data-align="center">↔</button><button class="col-align-btn" title="Sağa Yasla" data-td="td-name" data-align="right">→</button></div></div></div><div class="col-slider-row"><div class="col-slider-top"><span class="col-slider-label">ABC Göstergesi</span><div class="col-align-btns"><button class="col-align-btn" title="Sola Yasla" data-td="td-abc" data-align="left">←</button><button class="col-align-btn active" title="Ortala" data-td="td-abc" data-align="center">↔</button><button class="col-align-btn" title="Sağa Yasla" data-td="td-abc" data-align="right">→</button></div></div></div><div class="col-slider-row"><div class="col-slider-top"><span class="col-slider-label">Description</span><div class="col-align-btns"><button class="col-align-btn" title="Sola Yasla" data-td="td-desc" data-align="left">←</button><button class="col-align-btn active" title="Ortala" data-td="td-desc" data-align="center">↔</button><button class="col-align-btn" title="Sağa Yasla" data-td="td-desc" data-align="right">→</button></div></div></div><div class="col-slider-row"><div class="col-slider-top"><span class="col-slider-label">Miktar</span><div class="col-align-btns"><button class="col-align-btn active" title="Sola Yasla" data-td="td-miktar" data-align="left">←</button><button class="col-align-btn" title="Ortala" data-td="td-miktar" data-align="center">↔</button><button class="col-align-btn" title="Sağa Yasla" data-td="td-miktar" data-align="right">→</button></div></div></div><div class="col-slider-row"><div class="col-slider-top"><span class="col-slider-label">Yeni Kademe</span><div class="col-align-btns"><button class="col-align-btn active" title="Sola Yasla" data-td="td-yeni" data-align="left">←</button><button class="col-align-btn" title="Ortala" data-td="td-yeni" data-align="center">↔</button><button class="col-align-btn" title="Sağa Yasla" data-td="td-yeni" data-align="right">→</button></div></div></div></div>
   </div>
   <!-- Tablo Genişliği -->
   <div class="cp-pane" id="cp-tblwidth">
     <div class="col-panel-hint">Tablonun ekrandaki yayılımını belirleyin</div>
     <div class="tbl-width-row">
-      <div class="tbl-width-presets" id="tblWidthPresets"></div>
+      <div class="tbl-width-presets" id="tblWidthPresets" data-initialized="1"><button class="tbl-width-preset active" data-val="auto">Otomatik</button><button class="tbl-width-preset" data-val="100%">%100 Ekran</button><button class="tbl-width-preset" data-val="1200px">1200px</button><button class="tbl-width-preset" data-val="1600px">1600px</button><button class="tbl-width-preset" data-val="2000px">2000px</button></div>
       <div class="col-slider-top" style="margin-top:8px;">
         <span class="col-slider-label">Özel genişlik</span>
         <span class="col-slider-val" id="tblWidthVal">auto</span>
       </div>
       <div class="col-slider-wrap">
-        <div class="col-slider-track"><div class="col-slider-fill" id="tblWidthFill"></div></div>
+        <div class="col-slider-track"><div class="col-slider-fill" id="tblWidthFill" style="width: 19.375%;"></div></div>
         <input type="range" class="col-slider-input" id="tblWidthSlider" min="600" max="3000" step="20" value="1065" oninput="cpTblWidthSlide(this.value)">
       </div>
       <div class="col-slider-minmax"><span>600px</span><span>3000px</span></div>
@@ -1970,10 +2023,10 @@ body[data-theme="day"] .pager-bar{background:rgba(248,250,252,.9); border-top-co
     <button class="col-panel-save-btn" onclick="applyColWidths()">✓ Uygula &amp; Kaydet</button>
     <button class="col-panel-reset-btn" onclick="resetColWidths()">↺ Sıfırla</button>
     <button class="col-panel-toggle-btn" onclick="toggleColPanel()">Kapat</button>
-    <span class="col-panel-status" id="colPanelStatus"></span>
+    <span class="col-panel-status" id="colPanelStatus">Surukleme ile ayarlandi</span>
   </div>
 </div><div class="pane-loading" id="paneLoading"><div class="pane-loading-spinner"></div><div class="pane-loading-text">Yükleniyor</div><div class="pane-loading-sub" id="paneLoadingName"></div></div>
-<div class="content" id="mainContent"><div id="tabsContent"><div class="tab-pane" id="tab_12m_fuar_ebus___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_18m_ebus__nser____01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_antalya_tramvay___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_belgrad100_tramvay___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_belgrad25_tramvay___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_bursa_tramvay___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_elblag_tramvay___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_gebze_darica_metro___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_iasi_16_tramvay___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_iasi_18_tramvay___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_izmir_aliosbi_12m_ebus___01_07_" style="display:none"></div><div class="tab-pane" id="tab_kayser__5_tramvay___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_kayser__6_tramvay___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_kocael__tramvay___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_kocael__5_tramvay___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_napol__tramvay___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_onseri_trolleybus___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_prag_trolleybus___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_samsun_tramvay___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_samsun_2_tramvay___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_siemens_orl_mc___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_siemens_orl_t___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_solarmove___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_suntrans___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_tim10_tramvay___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_tim17_tramvay___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_tim23_tramvay___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_timisoara_12m_trolleybus___01_0" style="display:none"></div><div class="tab-pane" id="tab_timisoara_18m_trolleybus___01_0" style="display:none"></div><div class="tab-pane" id="tab__stanbul_metro___01_07_2026" style="display:none"></div></div></div>
+<div class="content" id="mainContent"><div id="tabsContent"><div id="projectSelectState" class="project-select-state" style="display: flex;"><div class="select-icon">⌁</div><div class="select-title">Bir proje seçin</div><div class="select-desc">Tabloyu görüntülemek için yukarıdaki proje kartlarından birini seçin.</div></div><div class="tab-pane" id="tab_12m_fuar_ebus___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_18m_ebus__nser____01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_antalya_tramvay___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_belgrad100_tramvay___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_belgrad25_tramvay___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_bursa_tramvay___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_elblag_tramvay___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_gebze_darica_metro___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_iasi_16_tramvay___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_iasi_18_tramvay___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_izmir_aliosbi_12m_ebus___01_07_" style="display:none"></div><div class="tab-pane" id="tab_kayser__5_tramvay___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_kayser__6_tramvay___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_kocael__tramvay___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_kocael__5_tramvay___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_napol__tramvay___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_onseri_trolleybus___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_prag_trolleybus___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_samsun_tramvay___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_samsun_2_tramvay___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_siemens_orl_mc___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_siemens_orl_t___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_solarmove___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_suntrans___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_tim10_tramvay___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_tim17_tramvay___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_tim23_tramvay___01_07_2026" style="display:none"></div><div class="tab-pane" id="tab_timisoara_12m_trolleybus___01_0" style="display:none"></div><div class="tab-pane" id="tab_timisoara_18m_trolleybus___01_0" style="display:none"></div><div class="tab-pane" id="tab__stanbul_metro___01_07_2026" style="display:none"></div></div></div>
 
 <script>
 (function(){
@@ -2008,7 +2061,7 @@ function _cellClass(i){
   return ['td-kademe','td-bno','td-rev','td-name','td-abc','td-desc','td-miktar','td-yeni'][i] || '';
 }
 function _tdClassByHeader(h){
-  var hh=String(h||'').toLowerCase().replace(/./g,'').trim();
+  var hh=String(h||'').toLowerCase().replace(/\\./g,'').trim();
   if(hh==='kademe') return 'td-kademe';
   if(hh==='bileşen no'||hh==='bilesen no') return 'td-bno';
   if(hh==='rev'||hh==='revizyon'||hh==='revizyon düzeyi'||hh==='revizyon duzeyi') return 'td-rev td-center';
@@ -2019,7 +2072,7 @@ function _tdClassByHeader(h){
   return 'td-miktar';
 }
 function _colClassByHeader(h){
-  var hh=String(h||'').toLowerCase().replace(/./g,'').trim();
+  var hh=String(h||'').toLowerCase().replace(/\\./g,'').trim();
   if(hh==='kademe') return 'col-kademe';
   if(hh==='bileşen no'||hh==='bilesen no') return 'col-bno';
   if(hh==='rev'||hh==='revizyon'||hh==='revizyon düzeyi'||hh==='revizyon duzeyi') return 'col-rev';
@@ -2030,7 +2083,7 @@ function _colClassByHeader(h){
   return 'col-miktar';
 }
 function _thClassByHeader(h){
-  var hh=String(h||'').toLowerCase().replace(/./g,'').trim();
+  var hh=String(h||'').toLowerCase().replace(/\\./g,'').trim();
   if(hh==='kademe') return 'th-kademe';
   if(hh==='bileşen no'||hh==='bilesen no') return 'th-bno';
   if(hh==='rev'||hh==='revizyon'||hh==='revizyon düzeyi'||hh==='revizyon duzeyi') return 'th-rev th-center';
@@ -2053,12 +2106,12 @@ var _colCfg=[
   {cls:'col-yeni',td:'td-yeni',label:'Yeni Kademe',min:50,max:250,step:2}
 ];
 var _sW={},_sDef={},_sAl={},_sTblW='auto';
-function _sRdW(cls){var ex=document.getElementById('col-settings-export');if(ex){var m=new RegExp('\.bom-table col\.'+cls+'\s*\{\s*width:\s*(\d+)px').exec(ex.textContent);if(m)return parseInt(m[1],10);}var els=document.querySelectorAll('style');for(var i=0;i<els.length;i++){var m=new RegExp('\.bom-table col\.'+cls+'\{width:(\d+)px').exec(els[i].textContent);if(!m)m=new RegExp('\.bom-table\s+col\.'+cls+'\s*\{[^}]*width:\s*(\d+)px','i').exec(els[i].textContent);if(m)return parseInt(m[1],10);}return 100;}
-function _sWrW(cls,px){var els=document.querySelectorAll('style');for(var i=0;i<els.length;i++){var t=els[i].textContent,ch=false;var nt=t.replace(new RegExp('(\.bom-table col\.'+cls+'\{width:)\d+px','g'),function(_,p){ch=true;return p+px+'px';});nt=nt.replace(new RegExp('(\.bom-table\s+col\.'+cls+'\s*\{[^}]*width:\s*)\d+px','gi'),function(_,p){ch=true;return p+px+'px';});if(ch)els[i].textContent=nt;}}
+function _sRdW(cls){var ex=document.getElementById('col-settings-export');if(ex){var m=new RegExp('\\.bom-table col\\.'+cls+'\\s*\\{\\s*width:\\s*(\\d+)px').exec(ex.textContent);if(m)return parseInt(m[1],10);}var els=document.querySelectorAll('style');for(var i=0;i<els.length;i++){var m=new RegExp('\\.bom-table col\\.'+cls+'\\{width:(\\d+)px').exec(els[i].textContent);if(!m)m=new RegExp('\\.bom-table\\s+col\\.'+cls+'\\s*\\{[^}]*width:\\s*(\\d+)px','i').exec(els[i].textContent);if(m)return parseInt(m[1],10);}return 100;}
+function _sWrW(cls,px){var els=document.querySelectorAll('style');for(var i=0;i<els.length;i++){var t=els[i].textContent,ch=false;var nt=t.replace(new RegExp('(\\.bom-table col\\.'+cls+'\\{width:)\\d+px','g'),function(_,p){ch=true;return p+px+'px';});nt=nt.replace(new RegExp('(\\.bom-table\\s+col\\.'+cls+'\\s*\\{[^}]*width:\\s*)\\d+px','gi'),function(_,p){ch=true;return p+px+'px';});if(ch)els[i].textContent=nt;}}
 function _sDom(cls,px){document.querySelectorAll('col.'+cls).forEach(function(e){e.style.width=px+'px';});}
 function _sApplyAl(td,al){var id='align-style-'+td;var el=document.getElementById(id);if(!el){el=document.createElement('style');el.id=id;document.head.appendChild(el);}el.textContent='.bom-table td.'+td+'{text-align:'+al+' !important;}';document.querySelectorAll('td.'+td).forEach(function(c){c.style.textAlign=al;});}
 function _sWrAl(td,al){_sApplyAl(td,al);}
-function _sRdAl(td){var ex=document.getElementById('col-settings-export');if(ex){var m=new RegExp('\.bom-table td\.'+td+'\s*\{\s*text-align:\s*(\w+)').exec(ex.textContent);if(m)return m[1];}var els=document.querySelectorAll('style');for(var i=els.length-1;i>=0;i--){var m=new RegExp('\.bom-table td\.'+td+'\s*\{[^}]*text-align:\s*(\w+)','i').exec(els[i].textContent);if(m)return m[1];}return 'left';}
+function _sRdAl(td){var ex=document.getElementById('col-settings-export');if(ex){var m=new RegExp('\\.bom-table td\\.'+td+'\\s*\\{\\s*text-align:\\s*(\\w+)').exec(ex.textContent);if(m)return m[1];}var els=document.querySelectorAll('style');for(var i=els.length-1;i>=0;i--){var m=new RegExp('\\.bom-table td\\.'+td+'\\s*\\{[^}]*text-align:\\s*(\\w+)','i').exec(els[i].textContent);if(m)return m[1];}return 'left';}
 function _sApplyTbl(v){document.querySelectorAll('.bom-table').forEach(function(t){t.style.width=v;t.style.minWidth=(v==='auto'||v==='100%')?'':v;});_sTblW=v;}
 function _sFill(sl){var f=sl.parentNode.querySelector('.col-slider-fill');if(!f)return;f.style.width=((parseInt(sl.value)-parseInt(sl.min))/(parseInt(sl.max)-parseInt(sl.min))*100)+'%';}
 function cpSwitchTab(id,btn){document.querySelectorAll('.cp-tab').forEach(function(b){b.classList.remove('active');});document.querySelectorAll('.cp-pane').forEach(function(p){p.classList.remove('active');});if(btn)btn.classList.add('active');var p=document.getElementById('cp-'+id);if(p)p.classList.add('active');}
@@ -2644,16 +2697,16 @@ async function _boot(){
         var t=ex.textContent;
         // Sütun genişlikleri
         ['col-kademe','col-bno','col-rev','col-name','col-abc','col-desc','col-miktar','col-yeni'].forEach(function(cls){
-          var m=new RegExp('.bom-table col.'+cls+'s*{s*width:s*(d+)px').exec(t);
+          var m=new RegExp('\\.bom-table col\\.'+cls+'\\s*\\{\\s*width:\\s*(\\d+)px').exec(t);
           if(m) document.querySelectorAll('col.'+cls).forEach(function(e){e.style.width=m[1]+'px';});
         });
         // Hizalamalar
         ['td-kademe','td-bno','td-rev','td-name','td-abc','td-desc','td-miktar','td-yeni'].forEach(function(td){
-          var m=new RegExp('.bom-table td.'+td+'s*{s*text-align:s*(w+)').exec(t);
+          var m=new RegExp('\\.bom-table td\\.'+td+'\\s*\\{\\s*text-align:\\s*(\\w+)').exec(t);
           if(m){var styleEl=document.getElementById('align-style-'+td);if(!styleEl){styleEl=document.createElement('style');styleEl.id='align-style-'+td;document.head.appendChild(styleEl);}styleEl.textContent='.bom-table td.'+td+'{text-align:'+m[1]+' !important;}';}
         });
         // Tablo genişliği
-        var mw=new RegExp('.bom-tables*{s*width:s*([^;!]+)').exec(t);
+        var mw=new RegExp('\\.bom-table\\s*\\{\\s*width:\\s*([^;!]+)').exec(t);
         if(mw){ var v=mw[1].trim(); document.querySelectorAll('.bom-table').forEach(function(tbl){tbl.style.width=v;tbl.style.minWidth=(v==='auto'||v==='100%')?'':v;}); }
       }
       initColWidthPanel();
@@ -2672,8 +2725,156 @@ async function _boot(){
     mc.insertAdjacentHTML('afterbegin','<div style="margin:24px;padding:18px;border:1px solid #f87171;border-radius:12px;color:#f87171;background:rgba(248,113,113,.08)">Rapor verisi açılamadı: '+_esc(e.message||e)+'</div>');
   }
 }
+
+
+// Excel mantigi sutun surukleme - genislikler kayitli rapora aktarilir
+(function(){
+  if (window.__excelColumnDragResizeInstalled) return;
+  window.__excelColumnDragResizeInstalled = true;
+
+  var CFG = [
+    {cls:'col-kademe',td:'td-kademe',min:40},
+    {cls:'col-bno',td:'td-bno',min:50},
+    {cls:'col-rev',td:'td-rev',min:30},
+    {cls:'col-name',td:'td-name',min:80},
+    {cls:'col-abc',td:'td-abc',min:30},
+    {cls:'col-desc',td:'td-desc',min:60},
+    {cls:'col-miktar',td:'td-miktar',min:30},
+    {cls:'col-yeni',td:'td-yeni',min:50}
+  ];
+
+  function px(n){ n=parseInt(n,10); return isNaN(n)?0:n; }
+  function getExportText(){ var ex=document.getElementById('col-settings-export'); return ex?ex.textContent:''; }
+  function readWidth(cls, idx){
+    var ex=getExportText();
+    var m=new RegExp('\\.bom-table\\s+col\\.'+cls+'\\s*\\{[^}]*width:\\s*(\\d+)px','i').exec(ex);
+    if(m) return px(m[1]);
+    var c=document.querySelector('col.'+cls);
+    if(c){ var sw=px(c.style.width); if(sw) return sw; var rw=Math.round(c.getBoundingClientRect().width); if(rw) return rw; }
+    var th=document.querySelector('.bom-table thead th:nth-child('+(idx+1)+')');
+    if(th){ var tw=Math.round(th.getBoundingClientRect().width); if(tw) return tw; }
+    return [60,80,40,280,42,205,57,92][idx] || 100;
+  }
+  function getWidths(){ return CFG.map(function(c,i){ return Math.max(c.min, readWidth(c.cls,i)); }); }
+  function totalWidth(ws){ return ws.reduce(function(a,b){ return a+px(b); },0); }
+  function ensureCurrentStyle(){
+    var el=document.getElementById('excel-drag-current-style');
+    if(!el){ el=document.createElement('style'); el.id='excel-drag-current-style'; document.head.appendChild(el); }
+    return el;
+  }
+  function syncGlobals(ws){
+    CFG.forEach(function(c,i){
+      if(window._colWidths) window._colWidths[c.cls]=ws[i];
+      if(window._sW) window._sW[c.cls]=ws[i];
+    });
+    var tw=totalWidth(ws)+'px';
+    if(typeof window._tblWidthMode !== 'undefined') window._tblWidthMode=tw;
+    if(typeof window._sTblW !== 'undefined') window._sTblW=tw;
+  }
+  function writeLiveStyle(ws){
+    var tw=totalWidth(ws);
+    var css='';
+    CFG.forEach(function(c,i){ css += '.bom-table col.'+c.cls+'{width:'+ws[i]+'px!important;}\n'; });
+    css += '.bom-table{width:'+tw+'px!important;min-width:'+tw+'px!important;table-layout:fixed!important;}\n';
+    css += '#stickyHead table{width:'+tw+'px!important;min-width:'+tw+'px!important;table-layout:fixed!important;}\n';
+    ensureCurrentStyle().textContent=css;
+  }
+  function writeExportStyle(ws){
+    var ex=document.getElementById('col-settings-export');
+    if(!ex){ ex=document.createElement('style'); ex.id='col-settings-export'; document.head.appendChild(ex); }
+    var old=ex.textContent||'';
+    var alignCss='';
+    for(var i=0;i<CFG.length;i++){
+      var re=new RegExp('\\.bom-table\\s+th:nth-child\\('+(i+1)+'\\)[^}]*\\}|\\.bom-table\\s+td\\.'+CFG[i].td+'[^}]*\\}|#stickyHead\\s+th:nth-child\\('+(i+1)+'\\)[^}]*\\}','gi');
+      var found=old.match(re);
+      if(found) alignCss += found.join('\n')+'\n';
+    }
+    var tw=totalWidth(ws);
+    var css='';
+    CFG.forEach(function(c,i){ css += '.bom-table col.'+c.cls+' { width: '+ws[i]+'px !important; }\n'; });
+    css += alignCss;
+    css += '.bom-table { width: '+tw+'px !important; min-width: '+tw+'px !important; table-layout: fixed !important; }\n';
+    css += '#stickyHead table { width: '+tw+'px !important; min-width: '+tw+'px !important; table-layout: fixed !important; }\n';
+    ex.textContent=css;
+  }
+  function applyWidths(ws){
+    CFG.forEach(function(c,i){ document.querySelectorAll('col.'+c.cls).forEach(function(col){ col.style.width=ws[i]+'px'; }); });
+    var tw=totalWidth(ws);
+    document.querySelectorAll('.bom-table').forEach(function(t){ t.style.width=tw+'px'; t.style.minWidth=tw+'px'; });
+    var st=document.getElementById('colPanelStatus'); if(st) st.textContent='Surukleme ile ayarlandi';
+    syncGlobals(ws); writeLiveStyle(ws); writeExportStyle(ws);
+    try{ if(typeof syncStickyWidths==='function') syncStickyWidths(); }catch(e){}
+  }
+  function addHandles(root){
+    root=root||document;
+    root.querySelectorAll('.bom-table thead tr').forEach(function(tr){
+      var ths=tr.children;
+      for(var i=0;i<ths.length && i<CFG.length;i++){
+        (function(idx,th){
+          if(th.dataset.dragResizeBound==='1') return;
+          th.dataset.dragResizeBound='1';
+          th.classList.add('col-resize-ready');
+          var h=document.createElement('span');
+          h.className='col-drag-handle';
+          h.title='Sutun genisligini surukleyerek ayarla';
+          th.appendChild(h);
+          h.addEventListener('mousedown',function(ev){ start(ev,idx,th); });
+          h.addEventListener('touchstart',function(ev){ if(ev.touches&&ev.touches[0]) start(ev.touches[0],idx,th,ev); }, {passive:false});
+        })(i,ths[i]);
+      }
+    });
+  }
+  function start(ev,idx,th,origEv){
+    if(origEv && origEv.preventDefault) origEv.preventDefault();
+    if(ev.preventDefault) ev.preventDefault();
+    if(ev.stopPropagation) ev.stopPropagation();
+    var startX=ev.clientX;
+    var ws=getWidths();
+    var startW=ws[idx];
+    document.body.classList.add('col-resizing');
+    th.classList.add('is-resizing');
+    function move(e){
+      var p=e.touches&&e.touches[0]?e.touches[0]:e;
+      var next=Math.max(CFG[idx].min, Math.round(startW + (p.clientX-startX)));
+      ws[idx]=next;
+      applyWidths(ws);
+    }
+    function up(){
+      document.body.classList.remove('col-resizing');
+      th.classList.remove('is-resizing');
+      document.removeEventListener('mousemove',move,true);
+      document.removeEventListener('mouseup',up,true);
+      document.removeEventListener('touchmove',move,true);
+      document.removeEventListener('touchend',up,true);
+      applyWidths(ws);
+    }
+    document.addEventListener('mousemove',move,true);
+    document.addEventListener('mouseup',up,true);
+    document.addEventListener('touchmove',move,true);
+    document.addEventListener('touchend',up,true);
+  }
+  function boot(){
+    addHandles(document);
+    applyWidths(getWidths());
+    var mo=new MutationObserver(function(muts){
+      var need=false;
+      for(var i=0;i<muts.length;i++){
+        if(muts[i].addedNodes && muts[i].addedNodes.length){ need=true; break; }
+      }
+      if(need){ addHandles(document); try{ if(typeof syncStickyWidths==='function') syncStickyWidths(); }catch(e){} }
+    });
+    mo.observe(document.body,{childList:true,subtree:true});
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot); else boot();
+})();
+
 if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _boot); else _boot();
 })();
 </script>
-</body>
-</html>
+<script>(function(){
+function _dlDialog(cb){var o=document.createElement('div');o.id='save-dialog-overlay';o.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:9999;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)';var b=document.createElement('div');b.style.cssText='background:#1e2330;border:1px solid #2e3a50;border-radius:14px;padding:28px 32px;max-width:390px;width:92%;box-shadow:0 16px 48px rgba(0,0,0,.55);font-family:Arial,sans-serif';b.innerHTML='<div style="font-size:16px;font-weight:700;margin-bottom:8px;color:#edf0f7">Raporu İndir</div><div style="font-size:13px;color:#9aaabe;margin-bottom:22px;line-height:1.65">İndirilen dosyada <b style="color:#edf0f7">Excel Yükle</b> ve <b style="color:#edf0f7">Raporu Kaydet</b> butonları görünsün mü?</div><div style="display:flex;gap:8px;flex-wrap:wrap"><button data-c="show" style="flex:1;min-width:100px;padding:10px 14px;border-radius:8px;cursor:pointer;font-weight:600;color:#fff;background:rgba(91,156,246,.75);border:1px solid rgba(91,156,246,.9)">Görünsün</button><button data-c="hide" style="flex:1;min-width:100px;padding:10px 14px;border-radius:8px;cursor:pointer;font-weight:600;color:#edf0f7;background:rgba(255,255,255,.04);border:1px solid #2e3a50">Gizlensin</button><button data-c="cancel" style="flex:1;min-width:100px;padding:10px 14px;border-radius:8px;cursor:pointer;font-weight:600;color:#9aaabe;background:transparent;border:1px solid #2e3a50">İptal</button></div>';o.appendChild(b);o.onclick=function(e){if(e.target===o){o.remove();cb('cancel');}};b.querySelectorAll('button').forEach(function(x){x.onclick=function(){var c=x.getAttribute('data-c');o.remove();cb(c);};});document.body.appendChild(o);}
+function _dl(includeButtons){var btn=document.getElementById('saveBtnEl');if(btn){btn.disabled=true;btn.textContent='Hazırlanıyor...';}try{var d=document.documentElement.cloneNode(true);var ov=d.querySelector('#save-dialog-overlay');if(ov&&ov.parentNode)ov.parentNode.removeChild(ov);var sb=d.querySelector('#saveBtnEl');if(sb){sb.disabled=false;sb.textContent='Raporu Kaydet';sb.style.display=includeButtons?'inline-flex':'none';}var ub=d.querySelector('#uploadBtnEl, .upload-btn');if(ub){ub.classList.remove('loading','success');ub.disabled=false;ub.style.display=includeButtons?'inline-flex':'none';}var cl=d.querySelector('#clearDataBtnEl');if(cl)cl.style.display='none';var cb=d.querySelector('#colWidthToggleBtn');if(cb&&cb.parentNode)cb.parentNode.removeChild(cb);var cp=d.querySelector('#colWidthPanel');if(cp)cp.style.display='none';var po=d.querySelector('#progress-overlay');if(po&&po.parentNode)po.parentNode.removeChild(po);var ld=d.querySelector('#paneLoading');if(ld)ld.classList.remove('visible');if(!includeButtons){var h=d.querySelector('head');if(h){var st=document.createElement('style');st.textContent='.upload-btn,.save-btn,.clear-data-btn,#colWidthToggleBtn,#colWidthPanel,.col-drag-handle,.col-drag-hint{display:none!important}';h.appendChild(st);}}var html='<!DOCTYPE html>\n'+d.outerHTML;var blob=new Blob([html],{type:'text/html;charset=utf-8'});var url=URL.createObjectURL(blob);var a=document.createElement('a');var n=new Date();var ts=n.getFullYear()+String(n.getMonth()+1).padStart(2,'0')+String(n.getDate()).padStart(2,'0')+'_'+String(n.getHours()).padStart(2,'0')+String(n.getMinutes()).padStart(2,'0');a.href=url;a.download='Birlesik_Urun_Agaclari_Raporu_'+ts+'.html';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url);},1000);}catch(e){alert('Kaydetme hatası: '+(e&&e.message?e.message:e));}finally{if(btn){btn.disabled=false;btn.textContent='Raporu Kaydet';}}}
+window.saveReport=function(){_dlDialog(function(c){if(c!=='cancel')_dl(c==='show');});};
+})();</script>
+
+</body></html>
